@@ -1,0 +1,26 @@
+{
+  "environment": "Development/Test",
+  "production": "UNTOUCHED",
+  "products": {
+    "jkdd_field": {
+      "name": "JKDD Field",
+      "url": "https://joukinneto.github.io/jkdd-field-host/",
+      "status": "VERIFIED_DEVELOPMENT_TEST"
+    },
+    "jkdd_connect": {
+      "name": "JKDD Connect",
+      "url": null,
+      "status": "PUBLIC_URL_NOT_VERIFIED"
+    },
+    "jkdd_leads": {
+      "name": "JKDD Leads",
+      "url": null,
+      "status": "PUBLIC_WEBSITE_PREVIEW_EXISTS_URL_NOT_VERIFIED"
+    },
+    "jkdd_family_finance": {
+      "name": "JKDD Family Finance",
+      "url": null,
+      "status": "PUBLIC_URL_NOT_VERIFIED"
+    }
+  }
+}
