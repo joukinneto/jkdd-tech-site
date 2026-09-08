@@ -1,26 +1,34 @@
 {
   "environment": "Development/Test",
   "production": "UNTOUCHED",
+  "routing_policy": "Institutional stable routes remain under jkdd-tech-site until each product marketing site has a verified canonical public URL.",
   "products": {
     "jkdd_field": {
       "name": "JKDD Field",
-      "url": "https://joukinneto.github.io/jkdd-field-host/",
-      "status": "VERIFIED_DEVELOPMENT_TEST"
+      "institutional_route": "/field/",
+      "marketing_site_url": null,
+      "application_development_url": "https://joukinneto.github.io/jkdd-field-host/",
+      "marketing_site_status": "NOT_YET_VERIFIED",
+      "application_status": "VERIFIED_DEVELOPMENT_TEST"
     },
     "jkdd_connect": {
       "name": "JKDD Connect",
-      "url": null,
-      "status": "PUBLIC_URL_NOT_VERIFIED"
+      "institutional_route": "/connect/",
+      "marketing_site_url": null,
+      "marketing_site_status": "NOT_YET_VERIFIED"
     },
     "jkdd_leads": {
       "name": "JKDD Leads",
-      "url": null,
-      "status": "PUBLIC_WEBSITE_PREVIEW_EXISTS_URL_NOT_VERIFIED"
+      "institutional_route": "/leads/",
+      "marketing_site_repository": "joukinneto/jkdd-leads-site",
+      "marketing_site_url": null,
+      "marketing_site_status": "REPOSITORY_CREATED_SITE_NOT_YET_VERIFIED"
     },
     "jkdd_family_finance": {
       "name": "JKDD Family Finance",
-      "url": null,
-      "status": "PUBLIC_URL_NOT_VERIFIED"
+      "institutional_route": "/family-finance/",
+      "marketing_site_url": null,
+      "marketing_site_status": "NOT_YET_VERIFIED"
     }
   }
 }
