@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://joukinneto.github.io/jkdd-tech-site/sitemap.xml
