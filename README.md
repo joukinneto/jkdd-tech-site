@@ -1,20 +1,29 @@
-# JKDD TECH — Institutional Website
+# JKDD TECH Institutional Website
 
-Official repository for the JKDD TECH institutional website and product portal.
+Status: Development / Preview  
+Production: UNTOUCHED
 
-## Governance
+## Purpose
+Official institutional hub for JKDD TECH and its product portfolio.
 
-- Environment: Development / Preview
-- Production: UNTOUCHED
-- Public institutional hub: JKDD TECH
-- Product websites remain product-owned
-- Lead Source of Truth: JKDD Leads
-- CRM owns Pipeline and Opportunity
-- Shared identity/security capabilities must reuse JKDD TECH Foundation when applicable
-- Do not present PLANNED, SPECIFIED or SCAFFOLDED capabilities as PRODUCTION
+## Stable institutional product routes
+- `/field/` → JKDD Field
+- `/connect/` → JKDD Connect
+- `/leads/` → JKDD Leads
+- `/family-finance/` → JKDD Family Finance
 
-## Development flow
+Each route stays stable under JKDD TECH. When a product marketing site receives a verified canonical public URL, only the route destination is updated.
 
-Website work is developed outside the production path and validated before any production/domain activation.
+## Product-site status
+- JKDD Field: marketing site URL not yet verified; application Development/Test is separate.
+- JKDD Connect: marketing site URL not yet verified.
+- JKDD Leads: public marketing repository `joukinneto/jkdd-leads-site` exists; public site URL not yet verified.
+- JKDD Family Finance: marketing site URL not yet verified.
 
-Current target: zero-cost Development/Test preview using GitHub Pages.
+## Lead architecture
+`JKDD TECH → Product Site → JKDD Leads → governed handoff → CRM`
+
+JKDD Leads remains the Lead Source of Truth. Pipeline and Opportunity remain CRM-owned.
+
+## Safety boundary
+No backend, secrets, database, migrations or live lead persistence in this preview. Production remains untouched.
