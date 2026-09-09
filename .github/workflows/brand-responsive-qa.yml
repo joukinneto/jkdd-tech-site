@@ -22,10 +22,10 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Playwright
+      - name: Install Playwright library
         run: |
           npm install --no-save playwright@1.55.0
-          npx playwright install --with-deps chromium
+          google-chrome --version
 
       - name: Start static server
         run: |
@@ -49,7 +49,7 @@ jobs:
             {name:'tablet-768x1024', width:768, height:1024},
             {name:'desktop-1440x1000', width:1440, height:1000},
           ];
-          const browser = await chromium.launch({headless:true});
+          const browser = await chromium.launch({headless:true, executablePath:'/usr/bin/google-chrome'});
           const summary = [];
           for (const target of targets) {
             const page = await browser.newPage({ viewport: { width: target.width, height: target.height } });
