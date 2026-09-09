@@ -1,0 +1,4 @@
+Foundation Issue: joukinneto/jkdd-foundation#155
+Owner-approved master Drive ID: 1n-HACnFaCCgDGPM-E62moHddMfmcdOS5
+Master SHA-256: fa9590a93f2e1181fc1daba3c65d7fc59b649189df98e397e012efe18f6af39c
+This branch is reserved for the governed branding rollout only. Binary transfer remains pending; do not invent favicon/small icon artwork. Production/main untouched.
