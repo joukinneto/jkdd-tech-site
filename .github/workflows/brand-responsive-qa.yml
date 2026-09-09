@@ -84,6 +84,16 @@ jobs:
             if (result.tagline !== 'Technology for a Better Tomorrow') throw new Error(`${target.name}: incorrect footer tagline: ${result.tagline}`);
             if (result.overflowX) throw new Error(`${target.name}: horizontal overflow ${result.documentWidth} > ${result.viewportWidth}`);
             if (pageErrors.length) throw new Error(`${target.name}: page errors: ${pageErrors.join(' | ')}`);
+            await page.evaluate(async () => {
+              const distance = Math.max(420, Math.floor(window.innerHeight * 0.72));
+              while (window.scrollY + window.innerHeight < document.documentElement.scrollHeight) {
+                window.scrollBy(0, distance);
+                await new Promise(resolve => setTimeout(resolve, 140));
+              }
+              await new Promise(resolve => setTimeout(resolve, 350));
+              window.scrollTo(0, 0);
+              await new Promise(resolve => setTimeout(resolve, 180));
+            });
             await page.screenshot({ path:`output/playwright/jkdd-tech-brand-${target.name}.png`, fullPage:true });
             summary.push({target, ...result});
             await page.close();
