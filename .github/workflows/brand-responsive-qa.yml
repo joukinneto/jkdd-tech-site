@@ -41,7 +41,7 @@ jobs:
       - name: Run responsive branding QA
         run: |
           mkdir -p output/playwright
-          cat > /tmp/brand-qa.mjs <<'NODE'
+          cat > brand-qa.mjs <<'NODE'
           import { chromium } from 'playwright';
           import fs from 'node:fs';
           const targets = [
@@ -92,7 +92,8 @@ jobs:
           await browser.close();
           fs.writeFileSync('output/playwright/brand-qa-summary.json', JSON.stringify(summary, null, 2));
           NODE
-          node /tmp/brand-qa.mjs
+          node brand-qa.mjs
+          rm brand-qa.mjs
 
       - name: Upload branding QA evidence
         uses: actions/upload-artifact@v4
