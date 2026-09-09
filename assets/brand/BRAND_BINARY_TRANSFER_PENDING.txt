@@ -1,0 +1,9 @@
+Canonical owner-approved JKDD TECH master is available in the Foundation runtime and Google Drive.
+
+Source file: JKDD_TECH_Logo_Official_EN_v2_2026-09-09.png
+Drive ID: 1n-HACnFaCCgDGPM-E62moHddMfmcdOS5
+Master SHA-256: fa9590a93f2e1181fc1daba3c65d7fc59b649189df98e397e012efe18f6af39c
+Master size: 1,154,463 bytes
+Runtime derivative prepared only by deterministic resize from that exact master: 192x192 PNG, SHA-256 4b9f56624feaa82398303c82d8da4933c85d2eb5680a417b37ffad0ceb3146b8.
+
+Do not redraw, recolor, restyle, substitute, or derive favicon/small-icon artwork. This file is temporary rollout control and must be removed once the approved binary is committed and QA is complete.
