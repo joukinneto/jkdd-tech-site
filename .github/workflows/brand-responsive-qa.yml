@@ -104,9 +104,18 @@ jobs:
           node brand-qa.mjs
           rm brand-qa.mjs
 
-      - name: Upload branding QA evidence
+      - name: Package Development/Test site snapshot
+        run: |
+          mkdir -p output/package
+          zip -qr output/package/JKDD_TECH_Site_Branding_EN_v2_2026-09-09.zip . \
+            -x '.git/*' 'node_modules/*' 'output/*' '.github/workflows/brand-responsive-qa.yml'
+          sha256sum output/package/JKDD_TECH_Site_Branding_EN_v2_2026-09-09.zip > output/package/JKDD_TECH_Site_Branding_EN_v2_2026-09-09.sha256.txt
+
+      - name: Upload branding QA evidence and site package
         uses: actions/upload-artifact@v4
         with:
-          name: jkdd-tech-brand-responsive-qa
-          path: output/playwright/
+          name: jkdd-tech-brand-rollout-evidence-and-package
+          path: |
+            output/playwright/
+            output/package/
           if-no-files-found: error
