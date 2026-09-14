@@ -1,4 +1,9 @@
 (() => {
+  const iconStyles = document.createElement('link');
+  iconStyles.rel = 'stylesheet';
+  iconStyles.href = '/assets/css/field-icons-hotfix.css?v=20260914-2';
+  document.head.appendChild(iconStyles);
+
   const header = document.querySelector('[data-header]');
   const menu = document.querySelector('[data-menu-toggle]');
   const nav = document.querySelector('[data-nav]');
