@@ -1,8 +1,27 @@
 (() => {
   const iconStyles = document.createElement('link');
   iconStyles.rel = 'stylesheet';
-  iconStyles.href = '/assets/css/field-icons-hotfix.css?v=20260914-2';
+  iconStyles.href = '/assets/css/field-icons-hotfix.css?v=20260914-3';
   document.head.appendChild(iconStyles);
+
+  // Render the official JKDD product/module atlas with browser-safe values.
+  // CSS multiplication inside calc() is not supported consistently by Safari,
+  // so positions are resolved here using ordinary JavaScript arithmetic.
+  const renderOfficialAtlas = () => {
+    document.querySelectorAll('.atlas').forEach(el => {
+      const styles = getComputedStyle(el);
+      const x = Number.parseInt(styles.getPropertyValue('--x').trim() || '0', 10) || 0;
+      const y = Number.parseInt(styles.getPropertyValue('--y').trim() || '0', 10) || 0;
+
+      el.style.backgroundImage = "url('/assets/brand/product-atlas.webp')";
+      el.style.backgroundSize = '500% 400%';
+      el.style.backgroundPosition = `${x * 25}% ${y * (100 / 3)}%`;
+      el.style.backgroundRepeat = 'no-repeat';
+    });
+  };
+
+  renderOfficialAtlas();
+  window.addEventListener('pageshow', renderOfficialAtlas);
 
   const header = document.querySelector('[data-header]');
   const menu = document.querySelector('[data-menu-toggle]');
