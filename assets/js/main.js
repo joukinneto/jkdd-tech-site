@@ -1,27 +1,45 @@
 (() => {
-  const iconStyles = document.createElement('link');
-  iconStyles.rel = 'stylesheet';
-  iconStyles.href = '/assets/css/field-icons-hotfix.css?v=20260914-3';
-  document.head.appendChild(iconStyles);
-
-  // Render the official JKDD product/module atlas with browser-safe values.
-  // CSS multiplication inside calc() is not supported consistently by Safari,
-  // so positions are resolved here using ordinary JavaScript arithmetic.
-  const renderOfficialAtlas = () => {
+  const renderAtlasSafely = () => {
     document.querySelectorAll('.atlas').forEach(el => {
+      if (el.dataset.safeAtlas === '1') return;
       const styles = getComputedStyle(el);
-      const x = Number.parseInt(styles.getPropertyValue('--x').trim() || '0', 10) || 0;
-      const y = Number.parseInt(styles.getPropertyValue('--y').trim() || '0', 10) || 0;
+      const x = Number.parseFloat(styles.getPropertyValue('--x')) || 0;
+      const y = Number.parseFloat(styles.getPropertyValue('--y')) || 0;
+      const size = styles.getPropertyValue('--size').trim() || '90px';
 
-      el.style.backgroundImage = "url('/assets/brand/product-atlas.webp')";
-      el.style.backgroundSize = '500% 400%';
-      el.style.backgroundPosition = `${x * 25}% ${y * (100 / 3)}%`;
-      el.style.backgroundRepeat = 'no-repeat';
+      el.dataset.safeAtlas = '1';
+      el.style.backgroundImage = 'none';
+      el.style.background = 'none';
+      el.style.position = 'relative';
+      el.style.display = 'block';
+      el.style.width = size;
+      el.style.height = size;
+      el.style.minWidth = size;
+      el.style.minHeight = size;
+      el.style.overflow = 'hidden';
+      el.style.flex = '0 0 auto';
+
+      const img = document.createElement('img');
+      img.src = '/assets/brand/product-atlas.webp?v=20260914-6';
+      img.alt = '';
+      img.setAttribute('aria-hidden', 'true');
+      img.decoding = 'async';
+      img.style.position = 'absolute';
+      img.style.left = '0';
+      img.style.top = '0';
+      img.style.width = '500%';
+      img.style.height = '400%';
+      img.style.maxWidth = 'none';
+      img.style.objectFit = 'fill';
+      img.style.transformOrigin = 'top left';
+      img.style.transform = `translate(${-x * 20}%, ${-y * 25}%)`;
+      img.style.pointerEvents = 'none';
+      img.style.userSelect = 'none';
+      el.appendChild(img);
     });
   };
 
-  renderOfficialAtlas();
-  window.addEventListener('pageshow', renderOfficialAtlas);
+  renderAtlasSafely();
 
   const header = document.querySelector('[data-header]');
   const menu = document.querySelector('[data-menu-toggle]');
