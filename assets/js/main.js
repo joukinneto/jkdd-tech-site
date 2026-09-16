@@ -4,7 +4,7 @@
     rendered: 0,
     failed: 0,
     ready: false,
-    source: '/assets/brand/product-atlas.webp?v=20260916-materialize-1'
+    source: '/assets/brand/product-atlas.webp?v=20260916-materialize-2'
   };
 
   const getAtlasCoordinates = (el) => {
@@ -21,6 +21,25 @@
     return [Number.isFinite(x) ? x : 0, Number.isFinite(y) ? y : 0];
   };
 
+  const ensureAssetFrame = (el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.width > 1 && rect.height > 1) return;
+
+    const styles = getComputedStyle(el);
+    const declaredSize = styles.getPropertyValue('--size').trim() || el.style.getPropertyValue('--size').trim();
+    const fallback = el.classList.contains('atlas') ? '116px' : '96px';
+    const size = declaredSize || fallback;
+
+    el.style.display = 'block';
+    el.style.position = 'relative';
+    el.style.width = size;
+    el.style.height = size;
+    el.style.minWidth = size;
+    el.style.minHeight = size;
+    el.style.flex = '0 0 auto';
+    el.style.overflow = 'hidden';
+  };
+
   const materializeOfficialAssets = () => {
     const targets = [...document.querySelectorAll('.atlas-frame, .atlas, .field-sprite')]
       .filter(el => !el.dataset.assetMaterialized);
@@ -31,6 +50,8 @@
       window.dispatchEvent(new CustomEvent('jkdd:assets-ready', { detail: assetQa }));
       return;
     }
+
+    targets.forEach(ensureAssetFrame);
 
     const atlas = new Image();
     atlas.decoding = 'async';
