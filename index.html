@@ -3,155 +3,175 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f4f1ea">
-<meta name="description" content="JKDD TECH designs software products, intelligent systems and digital experiences for real-world operations and growth.">
+<meta name="theme-color" content="#07131c">
+<meta name="description" content="JKDD TECH builds software, AI products, operational systems and premium digital experiences.">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://jkddtech.com/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="JKDD TECH — Software, Systems & Digital Products">
-<meta property="og:description" content="Built for work. Designed to move.">
+<meta property="og:title" content="JKDD TECH — Software, AI & Digital Products">
+<meta property="og:description" content="Technology that flows with the work.">
 <meta property="og:url" content="https://jkddtech.com/">
-<title>JKDD TECH — Software, Systems & Digital Products</title>
-<link rel="stylesheet" href="/assets/css/styles.css?v=20260916-editorial-1">
-<script src="/assets/js/main.js?v=20260916-editorial-1" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"JKDD TECH","url":"https://jkddtech.com/","email":"contact@jkddtech.com","description":"Software products, operational systems and digital experiences."}</script>
+<title>JKDD TECH — Software, AI & Digital Products</title>
+<link rel="stylesheet" href="/assets/css/styles.css?v=20260916-fluid-1">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="/assets/js/main.js?v=20260916-fluid-1" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"JKDD TECH","url":"https://jkddtech.com/","email":"contact@jkddtech.com","description":"Software, AI, automation and digital experience company."}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
 <header class="topbar" data-header>
   <a class="wordmark" href="#top" aria-label="JKDD TECH home">
-    <img src="/assets/brand/jkdd_tech_logo_official_en.png" alt="" width="42" height="42">
+    <img src="/assets/brand/jkdd_tech_logo_official_en.png" alt="JKDD TECH" width="48" height="48">
     <span>JKDD TECH</span>
   </a>
-  <nav class="nav" aria-label="Primary navigation">
+  <nav class="nav" aria-label="Primary navigation" data-nav>
     <a href="#products">Products</a>
-    <a href="#field">Field</a>
+    <a href="#field">JKDD Field</a>
     <a href="#studio">Studio</a>
     <a href="#company">Company</a>
   </nav>
-  <a class="nav-contact" href="mailto:contact@jkddtech.com">Contact ↗</a>
-  <button class="menu" data-menu aria-label="Open menu"><span></span><span></span></button>
+  <a class="nav-contact" href="mailto:contact@jkddtech.com">Start a project <span>↗</span></a>
+  <button class="menu" type="button" data-menu aria-expanded="false" aria-label="Open menu"><span></span><span></span></button>
 </header>
+
 <main id="main">
 <section class="hero" id="top">
-  <div class="hero-grid">
-    <div class="hero-copy reveal">
-      <p class="eyebrow">Independent technology company · Florida, USA</p>
-      <h1>Built for work.<br><em>Designed to move.</em></h1>
-      <p class="lede">JKDD TECH creates software, operational systems and digital products that turn complicated work into clear, usable experiences.</p>
+  <div class="hero-noise" aria-hidden="true"></div>
+  <div class="blob blob-a" aria-hidden="true"></div>
+  <div class="blob blob-b" aria-hidden="true"></div>
+  <div class="blob blob-c" aria-hidden="true"></div>
+  <div class="hero-shell">
+    <div class="hero-copy">
+      <p class="eyebrow hero-eyebrow">Independent technology company · Florida, USA</p>
+      <h1>Technology that <em>flows</em><br>with the work.</h1>
+      <p class="lede">JKDD TECH creates software, AI systems and digital experiences that make complex operations feel clear, fast and useful.</p>
       <div class="hero-actions">
-        <a class="btn ink" href="#products">View our products</a>
-        <a class="text-link" href="#studio">Explore the studio <span>↗</span></a>
+        <a class="btn btn-light" href="#products">Explore the ecosystem <span>↗</span></a>
+        <a class="text-link light" href="mailto:contact@jkddtech.com">Start a conversation</a>
       </div>
     </div>
-    <aside class="hero-index reveal delay-1" aria-label="Product index">
-      <div class="index-head"><span>Product index</span><span>2026</span></div>
-      <a href="/products/field/" class="index-row"><b>01</b><span>JKDD Field</span><i>Operations</i></a>
-      <a href="/products/family-finance/" class="index-row"><b>02</b><span>Family Finance</span><i>Fintech</i></a>
-      <a href="/products/leads/" class="index-row"><b>03</b><span>JKDD Leads</span><i>Growth</i></a>
-      <a href="/products/connect/" class="index-row"><b>04</b><span>JKDD Connect</span><i>Identity</i></a>
-      <a href="/products/liosyna-ai/" class="index-row"><b>05</b><span>LIOSYNA AI</span><i>Content</i></a>
-    </aside>
+
+    <div class="hero-orbit" aria-label="JKDD TECH product ecosystem">
+      <div class="orbit-line orbit-1" aria-hidden="true"></div>
+      <div class="orbit-line orbit-2" aria-hidden="true"></div>
+      <div class="core-logo"><img src="/assets/brand/jkdd_tech_logo_official_en.png" alt="JKDD TECH"></div>
+      <a class="float-product fp-field" href="/products/field/" aria-label="JKDD Field">
+        <span class="atlas-frame f00"><img src="/assets/brand/product-atlas.webp" alt="JKDD Field official icon"></span><b>JKDD Field</b>
+      </a>
+      <a class="float-product fp-finance" href="/products/family-finance/" aria-label="JKDD Family Finance">
+        <span class="atlas-frame f10"><img src="/assets/brand/product-atlas.webp" alt="JKDD Family Finance official logo"></span><b>Family Finance</b>
+      </a>
+      <a class="float-product fp-liosyna" href="/products/liosyna-ai/" aria-label="LIOSYNA AI">
+        <span class="atlas-frame f30"><img src="/assets/brand/product-atlas.webp" alt="LIOSYNA AI official icon"></span><b>LIOSYNA AI</b>
+      </a>
+      <a class="float-product fp-leads type-node" href="/products/leads/"><span>JL</span><b>JKDD Leads</b></a>
+      <a class="float-product fp-connect type-node" href="/products/connect/"><span>JC</span><b>JKDD Connect</b></a>
+    </div>
   </div>
-  <div class="statement-strip" aria-hidden="true"><span>SOFTWARE PRODUCTS</span><span>OPERATIONS</span><span>AI SYSTEMS</span><span>WEB EXPERIENCE</span><span>PRODUCT DESIGN</span></div>
+  <div class="hero-ticker" aria-hidden="true"><div>SOFTWARE ENGINEERING · AI & AUTOMATION · PRODUCT DESIGN · WEB EXPERIENCE · OPERATIONS · DATA & INTEGRATIONS · SOFTWARE ENGINEERING · AI & AUTOMATION · PRODUCT DESIGN · WEB EXPERIENCE ·</div></div>
+  <svg class="wave wave-light" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true"><path d="M0,76 C210,160 360,8 610,74 C840,136 1040,154 1440,40 L1440,150 L0,150 Z"></path></svg>
 </section>
 
 <section class="products" id="products">
-  <header class="section-intro reveal">
-    <p class="eyebrow">Products / 01—05</p>
-    <h2>Five products.<br>One engineering standard.</h2>
-    <p>We build each product around a real operational problem—not around a trend.</p>
-  </header>
+  <div class="section-head fluid-head">
+    <div><p class="eyebrow">Products / 01—05</p><h2>Five products.<br><em>One ecosystem.</em></h2></div>
+    <p>Different products, one standard: useful software, disciplined engineering and interfaces built around real work.</p>
+  </div>
 
-  <div class="product-list">
-    <article class="product-row product-field reveal">
-      <div class="product-number">01</div>
-      <div class="product-visual field-visual"><span class="sprite a00 lg" role="img" aria-label="JKDD Field official logo"></span></div>
-      <div class="product-info"><span class="tag">Field operations platform</span><h3>JKDD Field</h3><p>A modular operating system for construction and field teams—from time and estimates to fleet, billing and accounting.</p><a href="/products/field/">Open product <span>↗</span></a></div>
-      <div class="product-status">In development</div>
-    </article>
-
-    <article class="product-row product-finance reveal">
-      <div class="product-number">02</div>
-      <div class="product-visual finance-visual"><span class="sprite a10 lg" role="img" aria-label="JKDD Family Finance official logo"></span></div>
-      <div class="product-info"><span class="tag">Family finance platform</span><h3>JKDD Family Finance</h3><p>Financial organization and decision support designed around the way a household actually lives, plans and grows.</p><a href="/products/family-finance/">Open product <span>↗</span></a></div>
-      <div class="product-status">In development</div>
-    </article>
-
-    <article class="product-row product-liosyna reveal">
-      <div class="product-number">03</div>
-      <div class="product-visual liosyna-visual"><span class="sprite a30 lg" role="img" aria-label="LIOSYNA AI official icon"></span></div>
-      <div class="product-info"><span class="tag gold">AI content creation & automation</span><h3>LIOSYNA AI</h3><p>Create. Automate. Be Seen. A content operating system designed to move from idea to publishing and performance intelligence.</p><a href="/products/liosyna-ai/">Discover LIOSYNA <span>↗</span></a></div>
-      <div class="product-status">Coming soon</div>
-    </article>
-
-    <article class="product-row product-simple reveal">
-      <div class="product-number">04</div>
-      <div class="product-visual type-visual"><span>JKDD<br><strong>LEADS</strong></span></div>
-      <div class="product-info"><span class="tag">Lead generation & routing</span><h3>JKDD Leads</h3><p>Capture, qualify and route opportunities into an actionable pipeline.</p><a href="/products/leads/">Open product <span>↗</span></a></div>
-      <div class="product-status">In development</div>
-    </article>
-
-    <article class="product-row product-simple reveal">
-      <div class="product-number">05</div>
-      <div class="product-visual type-visual connect"><span>JKDD<br><strong>CONNECT</strong></span></div>
-      <div class="product-info"><span class="tag">Smart digital identity</span><h3>JKDD Connect</h3><p>Professional identity, smart sharing and business connection tools.</p><a href="/products/connect/">Open product <span>↗</span></a></div>
-      <div class="product-status">In development</div>
-    </article>
+  <div class="product-river">
+    <a class="river-card river-field" href="/products/field/">
+      <div class="river-visual"><span class="atlas-frame f00"><img src="/assets/brand/product-atlas.webp" alt="JKDD Field official icon"></span></div>
+      <div class="river-copy"><small>01 / FIELD OPERATIONS</small><h3>JKDD Field</h3><p>One operational system for time, estimates, control, fleet, billing, accounting and more.</p><span>Explore Field ↗</span></div>
+    </a>
+    <a class="river-card river-finance" href="/products/family-finance/">
+      <div class="river-visual"><span class="atlas-frame f10"><img src="/assets/brand/product-atlas.webp" alt="JKDD Family Finance official logo"></span></div>
+      <div class="river-copy"><small>02 / FAMILY FINANCE</small><h3>Family Finance</h3><p>Financial clarity and decision support designed around how a household actually lives.</p><span>Explore Finance ↗</span></div>
+    </a>
+    <a class="river-card river-liosyna" href="/products/liosyna-ai/">
+      <div class="river-visual"><span class="atlas-frame f30"><img src="/assets/brand/product-atlas.webp" alt="LIOSYNA AI official icon"></span></div>
+      <div class="river-copy"><small>03 / AI CONTENT</small><h3>LIOSYNA AI</h3><p>Create. Automate. Be Seen. From idea to publishing and performance intelligence.</p><span>Discover LIOSYNA ↗</span></div>
+    </a>
+    <a class="river-card river-leads" href="/products/leads/">
+      <div class="river-monogram">JL</div>
+      <div class="river-copy"><small>04 / GROWTH</small><h3>JKDD Leads</h3><p>Capture, qualify and route opportunities into an actionable sales pipeline.</p><span>Explore Leads ↗</span></div>
+    </a>
+    <a class="river-card river-connect" href="/products/connect/">
+      <div class="river-monogram">JC</div>
+      <div class="river-copy"><small>05 / DIGITAL IDENTITY</small><h3>JKDD Connect</h3><p>Professional identity, smart sharing and business connection tools.</p><span>Explore Connect ↗</span></div>
+    </a>
   </div>
 </section>
 
-<section class="field" id="field">
-  <div class="field-head reveal">
-    <div><p class="eyebrow light">JKDD Field / module system</p><h2>Fourteen modules.<br>One operational language.</h2></div>
-    <p>The Field ecosystem is intentionally modular. Each module has a focused responsibility while sharing a common foundation.</p>
+<section class="field-story" id="field">
+  <svg class="wave wave-dark" viewBox="0 0 1440 150" preserveAspectRatio="none" aria-hidden="true"><path d="M0,100 C310,10 460,160 760,75 C1020,5 1200,120 1440,45 L1440,150 L0,150 Z"></path></svg>
+  <div class="field-intro">
+    <div class="field-lockup"><span class="atlas-frame f00"><img src="/assets/brand/product-atlas.webp" alt="JKDD Field official icon"></span><div><p class="eyebrow light">JKDD Field ecosystem</p><h2>Fourteen modules.<br><em>One continuous flow.</em></h2></div></div>
+    <p>Scroll through the Field system. Every module has a focused responsibility while sharing one operational foundation.</p>
   </div>
-  <div class="module-rail" aria-label="JKDD Field modules">
-    <a class="module-card" href="/products/field/"><span class="sprite a01"></span><b>Field Time</b><small>01</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a11"></span><b>Field Calc</b><small>02</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a21"></span><b>Field Control</b><small>03</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a31"></span><b>Field Estimate</b><small>04</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a41"></span><b>Field Cost</b><small>05</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a02"></span><b>Dashboard</b><small>06</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a12"></span><b>Field Docs</b><small>07</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a22"></span><b>Field Fleet</b><small>08</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a32"></span><b>Inventory</b><small>09</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a42"></span><b>Billing</b><small>10</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a03"></span><b>Planning</b><small>11</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a13"></span><b>Accounting</b><small>12</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a23"></span><b>Field CRM</b><small>13</small></a>
-    <a class="module-card" href="/products/field/"><span class="sprite a33"></span><b>Safety & Quality</b><small>14</small></a>
+  <div class="field-pin">
+    <div class="field-track" data-field-track>
+      <article class="module-bubble"><span class="atlas-frame f01"><img src="/assets/brand/product-atlas.webp" alt="Field Time icon"></span><small>01</small><h3>Field Time</h3><p>Time & workforce.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f11"><img src="/assets/brand/product-atlas.webp" alt="Field Calc icon"></span><small>02</small><h3>Field Calc</h3><p>Fast job calculations.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f21"><img src="/assets/brand/product-atlas.webp" alt="Field Control icon"></span><small>03</small><h3>Field Control</h3><p>Operational control.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f31"><img src="/assets/brand/product-atlas.webp" alt="Field Estimate icon"></span><small>04</small><h3>Field Estimate</h3><p>Estimates & proposals.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f41"><img src="/assets/brand/product-atlas.webp" alt="Field Cost icon"></span><small>05</small><h3>Field Cost</h3><p>Costs & expenses.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f02"><img src="/assets/brand/product-atlas.webp" alt="Field Dashboard icon"></span><small>06</small><h3>Dashboard</h3><p>Operational intelligence.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f12"><img src="/assets/brand/product-atlas.webp" alt="Field Docs icon"></span><small>07</small><h3>Field Docs</h3><p>Documents & evidence.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f22"><img src="/assets/brand/product-atlas.webp" alt="Field Fleet icon"></span><small>08</small><h3>Field Fleet</h3><p>Vehicles & equipment.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f32"><img src="/assets/brand/product-atlas.webp" alt="Field Inventory icon"></span><small>09</small><h3>Inventory</h3><p>Stock & materials.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f42"><img src="/assets/brand/product-atlas.webp" alt="Field Billing icon"></span><small>10</small><h3>Field Billing</h3><p>Invoices & receivables.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f03"><img src="/assets/brand/product-atlas.webp" alt="Field Planning icon"></span><small>11</small><h3>Planning</h3><p>Operational planning.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f13"><img src="/assets/brand/product-atlas.webp" alt="Field Accounting icon"></span><small>12</small><h3>Accounting</h3><p>Financial operations.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f23"><img src="/assets/brand/product-atlas.webp" alt="Field CRM icon"></span><small>13</small><h3>Field CRM</h3><p>Customers & pipeline.</p></article>
+      <article class="module-bubble"><span class="atlas-frame f33"><img src="/assets/brand/product-atlas.webp" alt="Safety & Quality icon"></span><small>14</small><h3>Safety & Quality</h3><p>Quality & field safety.</p></article>
+      <a class="module-bubble module-end" href="/products/field/"><strong>Explore<br>JKDD Field</strong><span>↗</span></a>
+    </div>
   </div>
-  <a class="field-cta" href="/products/field/">Explore JKDD Field <span>↗</span></a>
 </section>
 
 <section class="liosyna" aria-label="LIOSYNA AI spotlight">
-  <div class="liosyna-art reveal"><span class="sprite a30 xl"></span><div class="liosyna-orbit"></div></div>
-  <div class="liosyna-copy reveal delay-1"><p class="eyebrow gold">New product</p><div class="liosyna-wordmark sprite a20 wide" role="img" aria-label="LIOSYNA AI official logo"></div><h2>Create.<br>Automate.<br><strong>Be Seen.</strong></h2><p>From idea generation and media creation to scheduling, publishing and performance intelligence—LIOSYNA is being built to keep the entire content lifecycle in one place.</p><a class="btn gold-btn" href="/products/liosyna-ai/">Discover LIOSYNA AI</a></div>
+  <div class="liosyna-glow" aria-hidden="true"></div>
+  <div class="liosyna-rings" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="liosyna-art"><span class="atlas-frame f30"><img src="/assets/brand/product-atlas.webp" alt="LIOSYNA AI official icon"></span></div>
+  <div class="liosyna-copy">
+    <p class="eyebrow gold">New product · AI content automation</p>
+    <div class="liosyna-lockup"><span class="atlas-frame f20"><img src="/assets/brand/product-atlas.webp" alt="LIOSYNA AI official logo"></span><span>LIOSYNA AI</span></div>
+    <h2>Create.<br>Automate.<br><strong>Be Seen.</strong></h2>
+    <p>From idea generation and media creation to scheduling, publishing and performance intelligence — LIOSYNA is being built as a content operating system.</p>
+    <a class="btn btn-gold" href="/products/liosyna-ai/">Discover LIOSYNA AI <span>↗</span></a>
+  </div>
 </section>
 
 <section class="studio" id="studio">
-  <div class="studio-title reveal"><p class="eyebrow">JKDD Web Studio</p><h2>Websites should feel<br>like finished products.</h2></div>
-  <div class="case-grid">
-    <article class="case case-dark reveal"><div class="case-top"><span>01 / Corporate</span><span>Live</span></div><div class="case-center"><img class="case-jkdd-logo" src="/assets/brand/jkdd_tech_logo_official_en.png" alt="JKDD TECH"></div><div class="case-bottom"><h3>JKDD TECH</h3><p>Corporate ecosystem and product portal.</p></div></article>
-    <article class="case case-light reveal delay-1"><div class="case-top"><span>02 / Construction</span><span>In development</span></div><div class="case-center"><span class="sprite a40 xlg"></span></div><div class="case-bottom"><h3>JKDD Finish & Remodeling</h3><p>Digital presence built around craft, credibility and lead conversion.</p></div></article>
-    <article class="case case-gold reveal"><div class="case-top"><span>03 / Product</span><span>Coming soon</span></div><div class="case-center"><span class="sprite a30 xlg"></span></div><div class="case-bottom"><h3>LIOSYNA AI</h3><p>Product storytelling for a new AI content platform.</p></div></article>
+  <div class="section-head studio-head"><div><p class="eyebrow">JKDD Web Studio</p><h2>Digital experiences<br><em>with a pulse.</em></h2></div><p>We combine software engineering, visual design, SEO, accessibility, performance and conversion — because a website is a product, not a poster.</p></div>
+  <div class="studio-flow">
+    <article class="studio-piece piece-jkdd"><div class="piece-meta">01 / Corporate / Live</div><img src="/assets/brand/jkdd_tech_logo_official_en.png" alt="JKDD TECH"><div><h3>JKDD TECH</h3><p>Corporate ecosystem and product portal.</p></div></article>
+    <article class="studio-piece piece-finish"><div class="piece-meta">02 / Construction / In development</div><span class="atlas-frame f40"><img src="/assets/brand/product-atlas.webp" alt="JKDD Finish & Remodeling logo"></span><div><h3>JKDD Finish & Remodeling</h3><p>Craft, credibility and lead conversion.</p></div></article>
+    <article class="studio-piece piece-ai"><div class="piece-meta">03 / Product / Coming soon</div><span class="atlas-frame f30"><img src="/assets/brand/product-atlas.webp" alt="LIOSYNA AI icon"></span><div><h3>LIOSYNA AI</h3><p>Product storytelling for an AI platform.</p></div></article>
   </div>
-  <a class="text-link studio-link" href="/websites/">View digital experiences <span>↗</span></a>
+  <a class="studio-link" href="/websites/">View digital experiences <span>↗</span></a>
 </section>
 
 <section class="principles" id="company">
-  <div class="principles-title reveal"><p class="eyebrow">How we work</p><h2>No decoration<br>without purpose.</h2></div>
-  <div class="principle-list reveal delay-1">
-    <div><b>01</b><span>Engineering first</span><p>Architecture, performance and maintainability are part of the design.</p></div>
-    <div><b>02</b><span>Clear interfaces</span><p>Complex systems should feel understandable without becoming simplistic.</p></div>
-    <div><b>03</b><span>Built to evolve</span><p>Products and websites are systems, not one-off pages.</p></div>
-    <div><b>04</b><span>Secure by design</span><p>Privacy, access control and operational safety are considered from the start.</p></div>
+  <div class="principles-copy"><p class="eyebrow">The JKDD standard</p><h2>Modern without<br><em>becoming noise.</em></h2><p>Motion has a job. Typography has a job. Every interaction must improve clarity, trust or momentum.</p></div>
+  <div class="principle-orbit">
+    <div class="principle p1"><b>01</b><span>Engineering first</span></div>
+    <div class="principle p2"><b>02</b><span>Clear interfaces</span></div>
+    <div class="principle p3"><b>03</b><span>Performance</span></div>
+    <div class="principle p4"><b>04</b><span>Secure by design</span></div>
+    <div class="principle p5"><b>05</b><span>Built to evolve</span></div>
   </div>
 </section>
 
-<section class="contact" id="contact"><p class="eyebrow light">Start a project</p><h2>Have something worth building?</h2><a href="mailto:contact@jkddtech.com">contact@jkddtech.com <span>↗</span></a></section>
+<section class="contact" id="contact">
+  <div class="contact-orb" aria-hidden="true"></div>
+  <p class="eyebrow light">Start a project</p>
+  <h2>Have something<br><em>worth building?</em></h2>
+  <a href="mailto:contact@jkddtech.com">contact@jkddtech.com <span>↗</span></a>
+</section>
 </main>
-<footer class="footer"><span>© 2026 JKDD TECH</span><span>Software · Systems · Digital Experience</span><a href="#top">Back to top ↑</a></footer>
+<footer class="footer"><span>© 2026 JKDD TECH</span><span>Software · AI · Systems · Digital Experience</span><a href="#top">Back to top ↑</a></footer>
 </body>
 </html>
