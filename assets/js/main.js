@@ -4,7 +4,7 @@
     rendered: 0,
     failed: 0,
     ready: false,
-    source: '/assets/brand/product-atlas.webp?v=20260916-materialize-2'
+    source: '/assets/brand/product-atlas.webp?v=20260916-materialize-3'
   };
 
   const getAtlasCoordinates = (el) => {
@@ -22,20 +22,23 @@
   };
 
   const ensureAssetFrame = (el) => {
+    // Only the legacy `.atlas` product-page component lost its sizing rules.
+    // Home `.atlas-frame` and Field `.field-sprite` receive their dimensions
+    // from their own layout CSS and must not be overridden inline.
+    if (!el.classList.contains('atlas')) return;
+
     const rect = el.getBoundingClientRect();
     if (rect.width > 1 && rect.height > 1) return;
 
     const styles = getComputedStyle(el);
-    const declaredSize = styles.getPropertyValue('--size').trim() || el.style.getPropertyValue('--size').trim();
-    const fallback = el.classList.contains('atlas') ? '116px' : '96px';
-    const size = declaredSize || fallback;
+    const declaredSize = styles.getPropertyValue('--size').trim() || el.style.getPropertyValue('--size').trim() || '116px';
 
     el.style.display = 'block';
     el.style.position = 'relative';
-    el.style.width = size;
-    el.style.height = size;
-    el.style.minWidth = size;
-    el.style.minHeight = size;
+    el.style.width = declaredSize;
+    el.style.height = declaredSize;
+    el.style.minWidth = declaredSize;
+    el.style.minHeight = declaredSize;
     el.style.flex = '0 0 auto';
     el.style.overflow = 'hidden';
   };
