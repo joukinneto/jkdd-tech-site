@@ -1,0 +1,52 @@
+name: Visual QA — JKDD TECH
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - main
+      - 'fix/**'
+      - 'feature/**'
+      - 'redesign/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-qa:
+    name: Playwright visual QA
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package.json
+
+      - name: Install test dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium and WebKit
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Run desktop + iPhone visual QA
+        run: npm run test:visual
+
+      - name: Upload QA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jkdd-tech-visual-qa-${{ github.sha }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14

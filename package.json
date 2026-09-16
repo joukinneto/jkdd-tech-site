@@ -1,0 +1,11 @@
+{
+  "name": "jkdd-tech-site",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test:visual": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0"
+  }
+}
