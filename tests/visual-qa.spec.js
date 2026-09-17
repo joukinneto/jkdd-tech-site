@@ -1,11 +1,13 @@
 const { test, expect } = require('@playwright/test');
 
 const routes = [
-  { name: 'Home', path: '/', minAssets: 20 },
-  { name: 'JKDD Field', path: '/products/field/', minAssets: 15 },
-  { name: 'Family Finance', path: '/products/family-finance/', minAssets: 1 },
-  { name: 'LIOSYNA AI', path: '/products/liosyna-ai/', minAssets: 2 },
-  { name: 'Websites', path: '/websites/', minAssets: 4 }
+  { name: 'Home', path: '/', minIcons: 15 },
+  { name: 'JKDD Field', path: '/products/field/', minIcons: 15 },
+  { name: 'Family Finance', path: '/products/family-finance/', minIcons: 0 },
+  { name: 'JKDD Connect', path: '/products/connect/', minIcons: 0 },
+  { name: 'JKDD Leads', path: '/products/leads/', minIcons: 0 },
+  { name: 'LIOSYNA AI', path: '/products/liosyna-ai/', minIcons: 1 },
+  { name: 'Websites', path: '/websites/', minIcons: 3 }
 ];
 
 for (const route of routes) {
@@ -13,39 +15,25 @@ for (const route of routes) {
     const pageErrors = [];
     page.on('pageerror', error => pageErrors.push(error.message));
 
-    await page.goto(route.path, { waitUntil: 'domcontentloaded' });
+    await page.goto(route.path, { waitUntil: 'networkidle' });
 
-    await page.waitForFunction(() => window.__JKDD_ASSET_QA__?.ready === true, null, { timeout: 15_000 });
-    const qa = await page.evaluate(() => ({ ...window.__JKDD_ASSET_QA__ }));
-
-    expect(qa.failed, `Asset materializer failures on ${route.path}`).toBe(0);
-    expect(qa.rendered, `Expected official assets on ${route.path}`).toBeGreaterThanOrEqual(route.minAssets);
-
-    const officialAssetState = await page.locator('.atlas-frame, .atlas, .field-sprite').evaluateAll(elements =>
-      elements.map(el => {
-        const img = el.querySelector('img.official-asset-img');
-        const rect = el.getBoundingClientRect();
-        return {
-          materialized: el.dataset.assetMaterialized,
-          hasImage: Boolean(img),
-          naturalWidth: img?.naturalWidth || 0,
-          naturalHeight: img?.naturalHeight || 0,
-          width: rect.width,
-          height: rect.height
-        };
-      })
+    const iconState = await page.locator('.icon-frame > img').evaluateAll(images =>
+      images.map(img => ({
+        src: img.currentSrc || img.src,
+        naturalWidth: img.naturalWidth,
+        naturalHeight: img.naturalHeight,
+        rectWidth: img.parentElement.getBoundingClientRect().width,
+        rectHeight: img.parentElement.getBoundingClientRect().height
+      }))
     );
 
-    for (const asset of officialAssetState) {
-      expect(asset.materialized).toBe('true');
-      expect(asset.hasImage).toBe(true);
-      expect(asset.naturalWidth).toBeGreaterThan(0);
-      expect(asset.naturalHeight).toBeGreaterThan(0);
-      expect(asset.width).toBeGreaterThan(20);
-      expect(asset.height).toBeGreaterThan(20);
+    expect(iconState.length, `Expected sprite icons on ${route.path}`).toBeGreaterThanOrEqual(route.minIcons);
+    for (const icon of iconState) {
+      expect(icon.naturalWidth, `Broken sprite image ${icon.src} on ${route.path}`).toBeGreaterThan(0);
+      expect(icon.naturalHeight, `Broken sprite image ${icon.src} on ${route.path}`).toBeGreaterThan(0);
+      expect(icon.rectWidth, `Zero-size icon frame for ${icon.src} on ${route.path}`).toBeGreaterThan(10);
+      expect(icon.rectHeight, `Zero-size icon frame for ${icon.src} on ${route.path}`).toBeGreaterThan(10);
     }
-
-    await page.waitForLoadState('networkidle').catch(() => {});
 
     const brokenImages = await page.locator('img').evaluateAll(images =>
       images

@@ -1,192 +1,149 @@
 (() => {
-  const assetQa = window.__JKDD_ASSET_QA__ = {
-    total: 0,
-    rendered: 0,
-    failed: 0,
-    ready: false,
-    source: '/assets/brand/product-atlas.webp?v=20260916-materialize-3'
-  };
-
-  const getAtlasCoordinates = (el) => {
-    const positionClass = [...el.classList].find(name => /^[fs]\d\d$/.test(name));
-    if (positionClass) {
-      return [Number(positionClass[1]), Number(positionClass[2])];
-    }
-
-    if (el.classList.contains('field-app-sprite')) return [0, 0];
-
-    const styles = getComputedStyle(el);
-    const x = Number.parseInt(styles.getPropertyValue('--x') || el.style.getPropertyValue('--x') || '0', 10);
-    const y = Number.parseInt(styles.getPropertyValue('--y') || el.style.getPropertyValue('--y') || '0', 10);
-    return [Number.isFinite(x) ? x : 0, Number.isFinite(y) ? y : 0];
-  };
-
-  const ensureAssetFrame = (el) => {
-    // Only the legacy `.atlas` product-page component lost its sizing rules.
-    // Home `.atlas-frame` and Field `.field-sprite` receive their dimensions
-    // from their own layout CSS and must not be overridden inline.
-    if (!el.classList.contains('atlas')) return;
-
-    const rect = el.getBoundingClientRect();
-    if (rect.width > 1 && rect.height > 1) return;
-
-    const styles = getComputedStyle(el);
-    const declaredSize = styles.getPropertyValue('--size').trim() || el.style.getPropertyValue('--size').trim() || '116px';
-
-    el.style.display = 'block';
-    el.style.position = 'relative';
-    el.style.width = declaredSize;
-    el.style.height = declaredSize;
-    el.style.minWidth = declaredSize;
-    el.style.minHeight = declaredSize;
-    el.style.flex = '0 0 auto';
-    el.style.overflow = 'hidden';
-  };
-
-  const materializeOfficialAssets = () => {
-    const targets = [...document.querySelectorAll('.atlas-frame, .atlas, .field-sprite')]
-      .filter(el => !el.dataset.assetMaterialized);
-
-    assetQa.total = targets.length;
-    if (!targets.length) {
-      assetQa.ready = true;
-      window.dispatchEvent(new CustomEvent('jkdd:assets-ready', { detail: assetQa }));
-      return;
-    }
-
-    targets.forEach(ensureAssetFrame);
-
-    const atlas = new Image();
-    atlas.decoding = 'async';
-    atlas.src = assetQa.source;
-
-    atlas.onload = () => {
-      const columns = 5;
-      const rows = 4;
-      const cellWidth = Math.round(atlas.naturalWidth / columns);
-      const cellHeight = Math.round(atlas.naturalHeight / rows);
-      const cache = new Map();
-
-      targets.forEach(el => {
-        try {
-          const [x, y] = getAtlasCoordinates(el);
-          if (x < 0 || x >= columns || y < 0 || y >= rows) throw new Error(`Invalid atlas cell ${x},${y}`);
-
-          const key = `${x}:${y}`;
-          let src = cache.get(key);
-          if (!src) {
-            const canvas = document.createElement('canvas');
-            canvas.width = cellWidth;
-            canvas.height = cellHeight;
-            const ctx = canvas.getContext('2d', { alpha: true });
-            if (!ctx) throw new Error('Canvas 2D context unavailable');
-            ctx.clearRect(0, 0, cellWidth, cellHeight);
-            ctx.drawImage(
-              atlas,
-              x * cellWidth,
-              y * cellHeight,
-              cellWidth,
-              cellHeight,
-              0,
-              0,
-              cellWidth,
-              cellHeight
-            );
-            src = canvas.toDataURL('image/png');
-            cache.set(key, src);
-          }
-
-          const existingImg = el.querySelector('img');
-          const label = el.getAttribute('aria-label') || existingImg?.alt || '';
-          const rendered = document.createElement('img');
-          rendered.src = src;
-          rendered.alt = label;
-          rendered.className = 'official-asset-img';
-          rendered.decoding = 'sync';
-          rendered.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:contain;display:block;transform:none;left:0;top:0;';
-
-          el.replaceChildren(rendered);
-          el.style.backgroundImage = 'none';
-          el.dataset.assetMaterialized = 'true';
-          el.classList.add('official-asset-ready');
-          assetQa.rendered += 1;
-        } catch (error) {
-          assetQa.failed += 1;
-          el.dataset.assetMaterialized = 'failed';
-          el.classList.add('official-asset-failed');
-          console.error('[JKDD assets] render failed', error, el);
-        }
-      });
-
-      assetQa.ready = true;
-      window.dispatchEvent(new CustomEvent('jkdd:assets-ready', { detail: assetQa }));
-    };
-
-    atlas.onerror = () => {
-      assetQa.failed = targets.length;
-      assetQa.ready = true;
-      targets.forEach(el => el.classList.add('official-asset-failed'));
-      console.error('[JKDD assets] product atlas failed to load:', assetQa.source);
-      window.dispatchEvent(new CustomEvent('jkdd:assets-ready', { detail: assetQa }));
-    };
-  };
-
-  materializeOfficialAssets();
-
-  const isFluidHome = Boolean(document.querySelector('.hero-orbit') && document.querySelector('.product-river'));
-
-  if (isFluidHome) {
-    const legacy = document.querySelector('link[href*="/assets/css/styles.css"]');
-    const fluid = document.createElement('link');
-    fluid.rel = 'stylesheet';
-    fluid.href = '/assets/css/home-fluid.css?v=20260916-fluid-2';
-    fluid.onload = () => legacy?.remove();
-    document.head.appendChild(fluid);
-
-    const script = document.createElement('script');
-    script.src = '/assets/js/home-fluid.js?v=20260916-fluid-2';
-    document.body.appendChild(script);
-    return;
-  }
-
-  const header = document.querySelector('[data-header]');
-  const menu = document.querySelector('[data-menu-toggle]');
-  const nav = document.querySelector('[data-nav]');
-  const year = document.querySelector('[data-year]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const header = document.querySelector('[data-header]');
+  const menu = document.querySelector('[data-menu], [data-menu-toggle]');
+  const nav = document.querySelector('[data-nav]');
+  const progress = document.querySelector('.scroll-progress span');
+  const year = document.querySelector('[data-year]');
 
   if (year) year.textContent = new Date().getFullYear();
-  const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 18);
+
+  const onScroll = () => {
+    header?.classList.toggle('scrolled', window.scrollY > 24);
+    if (progress) {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      progress.style.transform = `scaleX(${Math.min(1, window.scrollY / max)})`;
+    }
+  };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
   if (menu && nav) {
     menu.addEventListener('click', () => {
-      const open = !nav.classList.contains('open');
+      const open = document.body.classList.toggle('menu-open');
       nav.classList.toggle('open', open);
       menu.setAttribute('aria-expanded', String(open));
     });
     nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      document.body.classList.remove('menu-open');
       nav.classList.remove('open');
       menu.setAttribute('aria-expanded', 'false');
     }));
   }
 
-  if (!reduceMotion && 'IntersectionObserver' in window) {
+  const revealFallback = () => {
+    const nodes = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || reduceMotion) {
+      nodes.forEach(el => el.classList.add('visible', 'on'));
+      return;
+    }
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          entry.target.classList.add('on');
-          observer.unobserve(entry.target);
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible', 'on');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: .1, rootMargin: '0px 0px -5%' });
+    nodes.forEach(el => observer.observe(el));
+  };
+
+  const isFluidHome = Boolean(document.querySelector('.hero-orbit') && document.querySelector('.product-river'));
+
+  if (!isFluidHome || !window.gsap || !window.ScrollTrigger || reduceMotion) {
+    revealFallback();
+    return;
+  }
+
+  document.documentElement.classList.add('gsap-ready');
+  const { gsap, ScrollTrigger } = window;
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.set('.hero-copy > *', { autoAlpha: 0, y: 34 });
+  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  heroTl
+    .to('.hero-eyebrow', { autoAlpha: 1, y: 0, duration: .65 })
+    .to('.hero h1', { autoAlpha: 1, y: 0, duration: 1 }, '-=.38')
+    .to('.lede', { autoAlpha: 1, y: 0, duration: .7 }, '-=.55')
+    .to('.hero-actions', { autoAlpha: 1, y: 0, duration: .65 }, '-=.4');
+
+  gsap.from('.core-logo', { scale: .72, autoAlpha: 0, duration: 1.1, ease: 'back.out(1.4)', delay: .25 });
+  gsap.from('.orbit-line', { scale: .7, autoAlpha: 0, duration: 1.3, stagger: .13, ease: 'power3.out', delay: .3 });
+  gsap.from('.float-product', { scale: .72, autoAlpha: 0, y: 20, duration: .75, stagger: .09, ease: 'back.out(1.6)', delay: .55 });
+
+  gsap.to('.blob-a', { x: -80, y: 120, rotation: 20, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.2 } });
+  gsap.to('.blob-b', { x: 90, y: -70, rotation: -18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.4 } });
+  gsap.to('.blob-c', { y: 150, rotation: 35, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.5 } });
+
+  gsap.utils.toArray('.float-product').forEach((el, i) => {
+    gsap.to(el, { y: i % 2 ? 9 : -10, rotation: i % 2 ? 1.2 : -1.1, duration: 2.8 + i * .17, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+  });
+
+  gsap.from('.fluid-head > *', { autoAlpha: 0, y: 36, duration: .85, stagger: .14, ease: 'power3.out', scrollTrigger: { trigger: '.fluid-head', start: 'top 82%', once: true } });
+  gsap.utils.toArray('.river-card').forEach((card, i) => {
+    gsap.from(card, { autoAlpha: 0, x: i % 2 ? 70 : -70, rotation: i % 2 ? 1.2 : -1.2, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 86%', once: true } });
+  });
+
+  gsap.from('.field-intro > *', { autoAlpha: 0, y: 34, duration: .8, stagger: .14, ease: 'power3.out', scrollTrigger: { trigger: '.field-intro', start: 'top 80%', once: true } });
+
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 901px)', () => {
+    const track = document.querySelector('[data-field-track]');
+    const pin = document.querySelector('.field-pin');
+    if (!track || !pin) return;
+    const distance = () => Math.max(0, track.scrollWidth - window.innerWidth + 80);
+    const tween = gsap.to(track, {
+      x: () => -distance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: pin,
+        start: 'top top',
+        end: () => `+=${distance()}`,
+        scrub: .9,
+        pin: true,
+        invalidateOnRefresh: true,
+        anticipatePin: 1
+      }
+    });
+    gsap.utils.toArray('.module-bubble').forEach((card, i) => {
+      gsap.fromTo(card, { scale: .92, opacity: .58 }, {
+        scale: 1,
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: card,
+          containerAnimation: tween,
+          start: 'left 88%',
+          end: 'center 58%',
+          scrub: true
         }
       });
-    }, { threshold: .08 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  } else {
-    document.querySelectorAll('.reveal').forEach(el => {
-      el.classList.add('visible');
-      el.classList.add('on');
     });
-  }
+  });
+
+  mm.add('(max-width: 900px)', () => {
+    gsap.from('.module-bubble', { autoAlpha: 0, y: 30, duration: .65, stagger: .055, ease: 'power2.out', scrollTrigger: { trigger: '.field-track', start: 'top 88%', once: true } });
+  });
+
+  gsap.to('.liosyna-rings i:nth-child(1)', { rotation: 360, duration: 32, repeat: -1, ease: 'none' });
+  gsap.to('.liosyna-rings i:nth-child(2)', { rotation: -360, duration: 26, repeat: -1, ease: 'none' });
+  gsap.to('.liosyna-rings i:nth-child(3)', { rotation: 360, duration: 21, repeat: -1, ease: 'none' });
+  gsap.from('.liosyna-art .icon-frame', { autoAlpha: 0, scale: .68, rotation: -8, duration: 1.1, ease: 'back.out(1.4)', scrollTrigger: { trigger: '.liosyna', start: 'top 68%', once: true } });
+  gsap.from('.liosyna-copy > *', { autoAlpha: 0, y: 32, duration: .75, stagger: .11, ease: 'power3.out', scrollTrigger: { trigger: '.liosyna-copy', start: 'top 76%', once: true } });
+
+  gsap.utils.toArray('.studio-piece').forEach((piece, i) => {
+    gsap.from(piece, { autoAlpha: 0, y: 65, rotation: i % 2 ? 1.6 : -1.3, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: piece, start: 'top 86%', once: true } });
+  });
+
+  gsap.from('.principles-copy > *', { autoAlpha: 0, y: 28, duration: .75, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.principles', start: 'top 78%', once: true } });
+  gsap.from('.principle', { autoAlpha: 0, scale: .78, y: 25, duration: .7, stagger: .1, ease: 'back.out(1.5)', scrollTrigger: { trigger: '.principle-orbit', start: 'top 78%', once: true } });
+  gsap.to('.principle-orbit', { rotation: 3, ease: 'none', scrollTrigger: { trigger: '.principles', start: 'top bottom', end: 'bottom top', scrub: 1.5 } });
+
+  gsap.from('.contact > *:not(.contact-orb)', { autoAlpha: 0, y: 38, duration: .85, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: '.contact', start: 'top 78%', once: true } });
+  gsap.to('.contact-orb', { rotation: 28, y: 80, ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom top', scrub: 1.4 } });
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => ScrollTrigger.refresh(), 180);
+  }, { passive: true });
 })();
