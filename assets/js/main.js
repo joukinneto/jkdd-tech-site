@@ -133,6 +133,10 @@
 
   materializeOfficialAssets();
 
+  document.querySelectorAll('[data-year]').forEach(el => {
+    el.textContent = new Date().getFullYear();
+  });
+
   const isFluidHome = Boolean(document.querySelector('.hero-orbit') && document.querySelector('.product-river'));
 
   if (isFluidHome) {
@@ -152,10 +156,8 @@
   const header = document.querySelector('[data-header]');
   const menu = document.querySelector('[data-menu-toggle]');
   const nav = document.querySelector('[data-nav]');
-  const year = document.querySelector('[data-year]');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (year) year.textContent = new Date().getFullYear();
   const onScroll = () => header?.classList.toggle('scrolled', window.scrollY > 18);
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });

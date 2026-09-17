@@ -1,0 +1,136 @@
+/* Shared shell for /products/* and /websites/ pages.
+   These pages load styles.css (base resets + tokens) plus this file for
+   the header/hero/footer/card components that the "fluid" home redesign
+   does not provide. Uses the official JKDD TECH brand palette. */
+:root{
+  --pp-blue:#145F94;
+  --pp-deep:#073251;
+  --pp-graphite:#191919;
+  --pp-gray:#D3D3D3;
+  --pp-white:#FFFFFF;
+  --pp-orange:#FF830D;
+  --pp-line:rgba(255,255,255,.14);
+  --pp-muted:#9fb3c2;
+  --pp-max:1180px;
+}
+
+.product-page{
+  background:linear-gradient(165deg,var(--pp-deep) 0%,var(--pp-graphite) 100%);
+  color:var(--pp-white);
+  min-height:100vh;
+}
+
+.product-page .container{width:100%;max-width:var(--pp-max);margin:0 auto;padding:0 24px}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.skip-link{position:fixed;top:-60px;left:16px;z-index:1000;background:var(--pp-white);color:var(--pp-deep);padding:10px 16px;border-radius:8px;font-weight:700;font-size:.8rem;transition:top .2s ease}
+.skip-link:focus{top:16px}
+
+/* Header / nav */
+.product-page .site-header{position:fixed;top:0;left:0;right:0;z-index:100;height:76px;display:flex;align-items:center;background:transparent;border-bottom:1px solid transparent;transition:background .3s ease,border-color .3s ease}
+.product-page .site-header.scrolled{background:rgba(5,15,23,.78);backdrop-filter:blur(14px);border-bottom-color:var(--pp-line)}
+.product-page .nav-shell{display:flex;align-items:center;justify-content:space-between;gap:24px;width:100%}
+.product-page .brand{display:inline-flex;align-items:center;line-height:0}
+.product-page .brand img{display:block;width:42px;height:42px;border-radius:10px}
+
+.product-page .menu-toggle{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;border:1px solid var(--pp-line);border-radius:10px;background:transparent;cursor:pointer;padding:0}
+.product-page .menu-toggle span{display:block;width:18px;height:2px;background:var(--pp-white);transition:transform .25s ease,opacity .25s ease}
+.product-page .menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.product-page .menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.product-page .menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.product-page .primary-nav{display:flex;align-items:center;gap:28px}
+.product-page .primary-nav a{font-size:.82rem;font-weight:600;letter-spacing:.01em;color:var(--pp-gray);border-bottom:1px solid transparent;padding-bottom:2px;transition:color .2s ease,border-color .2s ease}
+.product-page .primary-nav a:hover{color:var(--pp-white);border-bottom-color:currentColor}
+
+@media(max-width:760px){
+  .product-page .menu-toggle{display:flex}
+  .product-page .primary-nav{position:fixed;top:76px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;background:rgba(5,15,23,.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--pp-line);max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .product-page .primary-nav.open{max-height:280px}
+  .product-page .primary-nav a{padding:16px 24px;border-bottom:1px solid var(--pp-line)}
+}
+
+/* Hero */
+.product-hero{padding:150px 0 72px}
+.product-hero-layout{display:grid;grid-template-columns:minmax(200px,340px) 1fr;gap:52px;align-items:center}
+.product-hero-logo{display:flex;align-items:center;justify-content:center}
+.product-hero-copy{display:flex;flex-direction:column;gap:14px}
+
+.breadcrumbs{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:.78rem;color:var(--pp-muted)}
+.breadcrumbs a{color:var(--pp-muted);border-bottom:1px solid transparent}
+.breadcrumbs a:hover{color:var(--pp-white);border-bottom-color:currentColor}
+.breadcrumbs span:last-child{color:var(--pp-white)}
+
+.section-kicker{font-size:.72rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--pp-blue)}
+.section-kicker.gold{color:var(--pp-orange)}
+
+.product-hero-copy h1{font-size:clamp(2.1rem,4vw,3.2rem);line-height:1.05;margin:2px 0 0;font-weight:800}
+.liosyna-page h1 span{color:var(--pp-orange)}
+.product-hero-copy p{color:var(--pp-gray);font-size:1.05rem;max-width:560px;margin:0}
+
+.product-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:2px}
+.meta-chip{font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:7px 14px;border-radius:999px;border:1px solid var(--pp-line);color:var(--pp-gray)}
+
+.type-hero-mark{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;line-height:1.2;color:var(--pp-white)}
+.type-hero-mark strong{display:block;color:var(--pp-blue);font-size:1.4em}
+.type-hero-mark span{display:block;margin-top:8px;font-size:.42em;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pp-muted)}
+
+.webstudio-logo{display:block;width:100%;max-width:220px;margin:0 auto;border-radius:20px;background:var(--pp-white);padding:14px}
+
+.atlas{display:block;width:var(--size,116px);height:var(--size,116px);min-width:var(--size,116px);min-height:var(--size,116px);flex:0 0 auto;border-radius:20px;overflow:hidden;position:relative;background:rgba(255,255,255,.06)}
+
+.liosyna-hero-art{position:relative;display:grid;place-items:center;min-height:250px;width:100%}
+.liosyna-hero-art .liosyna-hero-wordmark{position:absolute;bottom:-14px;right:6px}
+
+/* Body content */
+.product-body{padding:0 0 96px}
+.content-block{display:flex;flex-direction:column;gap:16px;max-width:760px}
+.content-block h2{font-size:clamp(1.5rem,2.6vw,2.1rem);margin:0;font-weight:800}
+.content-block p{color:var(--pp-gray);margin:0;font-size:1rem;line-height:1.6}
+
+.placeholder-panel{border:1px dashed var(--pp-line);border-radius:14px;padding:16px 20px;color:var(--pp-muted);font-size:.88rem;line-height:1.5}
+.product-contact{margin-top:6px}
+
+.feature-list{display:flex;flex-wrap:wrap;gap:10px}
+.feature-list span{font-size:.82rem;font-weight:600;padding:8px 14px;border-radius:999px;background:rgba(255,131,13,.12);color:var(--pp-orange);border:1px solid rgba(255,131,13,.3)}
+
+.button{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;border-radius:999px;font-size:.85rem;font-weight:700;border:1px solid currentColor;transition:background .2s ease,color .2s ease}
+.button-secondary{color:var(--pp-white);border-color:var(--pp-line)}
+.button-secondary:hover{background:var(--pp-white);color:var(--pp-deep)}
+.button-gold{color:var(--pp-orange);border-color:var(--pp-orange)}
+.button-gold:hover{background:var(--pp-orange);color:var(--pp-deep)}
+
+/* Footer */
+.site-footer.compact-footer{border-top:1px solid var(--pp-line);padding:28px 0;margin-top:24px}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--pp-muted)}
+.footer-bottom a{color:var(--pp-gray);border-bottom:1px solid transparent}
+.footer-bottom a:hover{color:var(--pp-white);border-bottom-color:currentColor}
+
+/* Websites showcase page */
+.section-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;flex-wrap:wrap;margin-bottom:36px}
+.section-head p{max-width:420px;color:var(--pp-muted);margin:0;font-size:.92rem}
+
+.experience-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.experience-card{display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:20px;border:1px solid var(--pp-line);background:linear-gradient(150deg,rgba(20,95,148,.16),rgba(7,19,28,.5))}
+.experience-logo{display:flex;align-items:center;justify-content:center;height:76px}
+.experience-logo img{max-width:100%;max-height:100%;border-radius:12px}
+.experience-logo.logo-jkdd img{background:var(--pp-white);padding:8px;border-radius:12px}
+.experience-logo.type-logo b{font-size:1.05rem;font-weight:800;color:var(--pp-blue)}
+.experience-card>div:nth-of-type(2){display:flex;flex-direction:column;gap:4px}
+.experience-card>div:nth-of-type(2)>span:first-child{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--pp-blue);font-weight:700}
+.experience-card h3{margin:0;font-size:1.05rem}
+.experience-card p{margin:0;color:var(--pp-muted);font-size:.85rem}
+.status-line{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--pp-muted)}
+.status-line.gold-text{color:var(--pp-orange)}
+
+@media(max-width:760px){
+  .product-hero{padding:128px 0 56px}
+  .product-hero-layout{grid-template-columns:1fr;text-align:center;gap:28px}
+  .product-hero-copy{align-items:center}
+  .product-hero-copy p{max-width:none}
+  .breadcrumbs{justify-content:center}
+  .product-meta{justify-content:center}
+  .experience-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;align-items:flex-start}
+}
