@@ -3,9 +3,9 @@ const { test, expect } = require('@playwright/test');
 const routes = [
   { name: 'Home', path: '/', minIcons: 15 },
   { name: 'JKDD Field', path: '/products/field/', minIcons: 15 },
-  { name: 'Family Finance', path: '/products/family-finance/', minIcons: 0 },
-  { name: 'JKDD Connect', path: '/products/connect/', minIcons: 0 },
-  { name: 'JKDD Leads', path: '/products/leads/', minIcons: 0 },
+  { name: 'Family Finance', path: '/products/family-finance/', minIcons: 1 },
+  { name: 'JKDD Connect', path: '/products/connect/', minIcons: 1 },
+  { name: 'JKDD Leads', path: '/products/leads/', minIcons: 1 },
   { name: 'LIOSYNA AI', path: '/products/liosyna-ai/', minIcons: 1 },
   { name: 'Websites', path: '/websites/', minIcons: 3 }
 ];
