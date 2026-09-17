@@ -129,7 +129,7 @@ button{font:inherit}
 .fp-liosyna{right:3%;bottom:15%}
 .fp-leads{left:4%;bottom:13%}
 .fp-connect{right:31%;top:3%}
-.type-node span{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0f455e,#126996);color:#9ce4fa;font-weight:900}
+
 .hero-ticker{position:relative;z-index:3;border-top:1px solid rgba(255,255,255,.1);height:60px;overflow:hidden;display:flex;align-items:center;color:#6f8996;font-size:.59rem;font-weight:900;letter-spacing:.16em;white-space:nowrap}
 .hero-ticker div{width:max-content;animation:ticker 28s linear infinite}
 @keyframes ticker{to{transform:translateX(-50%)}}
@@ -160,7 +160,7 @@ button{font:inherit}
 .river-copy p{max-width:580px;margin:0 0 28px;color:#5a6970}
 .river-liosyna .river-copy p,.river-leads .river-copy p{color:#9fb0b7}
 .river-copy>span{font-size:.72rem;font-weight:850;border-bottom:1px solid currentColor;padding-bottom:4px}
-.river-monogram{width:190px;height:190px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);font-size:3.7rem;font-weight:900;color:#89d9f0}
+
 
 /* ------------------------------ Field story ------------------------------ */
 .field-story{position:relative;background:var(--ink);color:#f1f5f3;padding:155px 0 0;overflow:hidden}
@@ -282,9 +282,9 @@ button{font:inherit}
 .feature-list{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0}
 .feature-list span{padding:8px 16px;border-radius:999px;background:var(--paper2);border:1px solid var(--line);font-size:.78rem;font-weight:700;color:#4c5a61}
 
-.type-hero-mark{display:flex;flex-direction:column;gap:8px;padding:34px 30px;border-radius:32px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05);color:#f2f6f4;font-size:1.5rem;font-weight:800;letter-spacing:.02em;justify-self:center;text-align:center}
-.type-hero-mark strong{display:block;font-size:2.1rem;letter-spacing:-.01em;color:var(--cyan)}
-.type-hero-mark span{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#9db3bc}
+
+
+
 
 .liosyna-hero-art{position:relative;display:grid;place-items:center;min-height:260px}
 .liosyna-hero-art .icon-frame.liosyna-hero-icon{--frame:min(48vw,230px);border-radius:50%;filter:drop-shadow(0 30px 60px rgba(214,164,73,.25))}
@@ -324,8 +324,8 @@ button{font:inherit}
 .experience-logo img{width:100%;height:100%;object-fit:contain}
 .experience-logo.logo-jkdd{background:var(--ink)}
 .experience-logo.logo-jkdd img{padding:10px}
-.experience-logo.type-logo{background:linear-gradient(135deg,#0f455e,#126996)}
-.experience-logo.type-logo b{color:#9ce4fa;font-size:.62rem;letter-spacing:.05em}
+
+
 .experience-card>div>span{font-size:.62rem;font-weight:850;letter-spacing:.1em;text-transform:uppercase;color:#7c8a91}
 .experience-card h3{margin:6px 0 6px;font-size:1.4rem;letter-spacing:-.01em}
 .experience-card>div>p{margin:0;color:var(--muted);font-size:.92rem}
@@ -378,7 +378,7 @@ button{font:inherit}
   .products{padding-top:110px;padding-bottom:120px}
   .river-card{width:100%;margin-left:0;grid-template-columns:190px 1fr;min-height:300px}
   .river-visual .icon-frame{--frame:145px}
-  .river-monogram{width:150px;height:150px}
+
   .field-story{padding-top:120px}
   .field-intro{width:min(calc(100% - 36px),var(--max))}
   .field-lockup{align-items:flex-start}
@@ -409,7 +409,7 @@ button{font:inherit}
   .float-product{padding:7px 10px 7px 7px}
   .float-product .icon-frame{--frame:42px}
   .float-product b{font-size:.58rem}
-  .type-node span{width:40px;height:40px}
+
   .fp-field{top:15%}
   .fp-finance{top:19%}
   .fp-liosyna{bottom:12%}
@@ -424,7 +424,7 @@ button{font:inherit}
   .river-visual{min-height:180px;width:100%}
   .river-visual .icon-frame{--frame:138px}
   .river-visual:before{width:170px;height:170px}
-  .river-monogram{width:125px;height:125px;font-size:2.8rem}
+
   .river-copy h3{font-size:2.65rem}
   .field-story{padding-top:100px}
   .field-intro{margin-bottom:34px}
