@@ -9,7 +9,7 @@ const routes = [
 ];
 
 for (const route of routes) {
-  test(`${route.name}: official assets render and layout stays inside viewport`, async ({ page }) => {
+  test(`${route.name}: official assets render visibly and layout stays inside viewport`, async ({ page }) => {
     const pageErrors = [];
     page.on('pageerror', error => pageErrors.push(error.message));
 
@@ -25,24 +25,48 @@ for (const route of routes) {
       elements.map(el => {
         const img = el.querySelector('img.official-asset-img');
         const rect = el.getBoundingClientRect();
+        let visiblePixels = 0;
+        let totalPixels = 0;
+
+        if (img && img.complete && img.naturalWidth > 0) {
+          const canvas = document.createElement('canvas');
+          canvas.width = 32;
+          canvas.height = 32;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          if (ctx) {
+            ctx.clearRect(0, 0, 32, 32);
+            ctx.drawImage(img, 0, 0, 32, 32);
+            const pixels = ctx.getImageData(0, 0, 32, 32).data;
+            totalPixels = pixels.length / 4;
+            for (let i = 3; i < pixels.length; i += 4) {
+              if (pixels[i] > 12) visiblePixels += 1;
+            }
+          }
+        }
+
         return {
+          label: img?.alt || el.getAttribute('aria-label') || 'unnamed asset',
           materialized: el.dataset.assetMaterialized,
           hasImage: Boolean(img),
           naturalWidth: img?.naturalWidth || 0,
           naturalHeight: img?.naturalHeight || 0,
           width: rect.width,
-          height: rect.height
+          height: rect.height,
+          visiblePixels,
+          totalPixels
         };
       })
     );
 
     for (const asset of officialAssetState) {
-      expect(asset.materialized).toBe('true');
-      expect(asset.hasImage).toBe(true);
-      expect(asset.naturalWidth).toBeGreaterThan(0);
-      expect(asset.naturalHeight).toBeGreaterThan(0);
-      expect(asset.width).toBeGreaterThan(20);
-      expect(asset.height).toBeGreaterThan(20);
+      expect(asset.materialized, asset.label).toBe('true');
+      expect(asset.hasImage, asset.label).toBe(true);
+      expect(asset.naturalWidth, asset.label).toBeGreaterThan(0);
+      expect(asset.naturalHeight, asset.label).toBeGreaterThan(0);
+      expect(asset.width, asset.label).toBeGreaterThan(20);
+      expect(asset.height, asset.label).toBeGreaterThan(20);
+      expect(asset.totalPixels, asset.label).toBeGreaterThan(0);
+      expect(asset.visiblePixels, `${asset.label} rendered as an empty/transparent image`).toBeGreaterThan(12);
     }
 
     await page.waitForLoadState('networkidle').catch(() => {});
