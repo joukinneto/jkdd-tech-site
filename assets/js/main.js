@@ -1,10 +1,11 @@
 (() => {
+  const ASSET_REV = '20260916-icons-4';
   const assetQa = window.__JKDD_ASSET_QA__ = {
     total: 0,
     rendered: 0,
     failed: 0,
     ready: false,
-    source: '/assets/brand/product-atlas.webp?v=20260916-materialize-3'
+    source: `/assets/brand/product-atlas.webp?v=${ASSET_REV}`
   };
 
   const getAtlasCoordinates = (el) => {
@@ -22,9 +23,6 @@
   };
 
   const ensureAssetFrame = (el) => {
-    // Only the legacy `.atlas` product-page component lost its sizing rules.
-    // Home `.atlas-frame` and Field `.field-sprite` receive their dimensions
-    // from their own layout CSS and must not be overridden inline.
     if (!el.classList.contains('atlas')) return;
 
     const rect = el.getBoundingClientRect();
@@ -139,12 +137,12 @@
     const legacy = document.querySelector('link[href*="/assets/css/styles.css"]');
     const fluid = document.createElement('link');
     fluid.rel = 'stylesheet';
-    fluid.href = '/assets/css/home-fluid.css?v=20260916-fluid-2';
+    fluid.href = `/assets/css/home-fluid.css?v=${ASSET_REV}`;
     fluid.onload = () => legacy?.remove();
     document.head.appendChild(fluid);
 
     const script = document.createElement('script');
-    script.src = '/assets/js/home-fluid.js?v=20260916-fluid-2';
+    script.src = `/assets/js/home-fluid.js?v=${ASSET_REV}`;
     document.body.appendChild(script);
     return;
   }
