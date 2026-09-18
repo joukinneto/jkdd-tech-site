@@ -1,0 +1,85 @@
+name: Family Finance Runtime Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/family-finance/**"
+      - ".github/workflows/family-finance-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wait for GitHub Pages publication
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL="https://jkddtech.com/apps/family-finance/?sha=\${GITHUB_SHA}"
+          for attempt in $(seq 1 24); do
+            if curl -fsSL --max-time 15 "$URL" | grep -q "continuo-password-9"; then
+              echo "Published Family Finance bootstrap is live."
+              exit 0
+            fi
+            echo "Waiting for Pages deployment ($attempt/24)..."
+            sleep 5
+          done
+          echo "Timed out waiting for published bootstrap."
+          exit 1
+
+      - name: Install browser test dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Verify Family Finance first-access password rule
+        shell: bash
+        run: |
+          node <<'NODE'
+          const { chromium } = require('@playwright/test');
+
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage();
+            const errors = [];
+
+            page.on('pageerror', error => errors.push(String(error)));
+            page.on('console', message => {
+              if (message.type() === 'error') errors.push(message.text());
+            });
+
+            await page.goto(
+              'https://jkddtech.com/apps/family-finance/?smoke=' + Date.now(),
+              { waitUntil: 'domcontentloaded', timeout: 90000 }
+            );
+
+            await page.getByText('JKDD Family Finance', { exact: true })
+              .waitFor({ state: 'visible', timeout: 90000 });
+
+            await page.getByRole('button', { name: 'Primeiro acesso', exact: true })
+              .click();
+
+            await page.getByText(
+              'Mínimo 9 caracteres, com letra e número.',
+              { exact: true }
+            ).waitFor({ state: 'visible', timeout: 30000 });
+
+            if (errors.length) {
+              console.log('Browser console/page errors:', errors);
+            }
+
+            console.log('Family Finance runtime smoke passed: 9-character rule is live.');
+            await browser.close();
+          })().catch(error => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
