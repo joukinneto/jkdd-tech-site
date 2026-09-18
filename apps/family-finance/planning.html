@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#073251">
+  <title>Planejamento Familiar | JKDD Family Finance</title>
+  <style>
+    :root{
+      --navy:#073251;--blue:#145f94;--teal:#0f766e;--orange:#ff830d;--red:#b82f2f;
+      --bg:#f6f8fb;--surface:#fff;--text:#191919;--muted:#667085;--border:#e3e8ef;
+      --soft-teal:#e8f5f2;--soft-blue:#eaf2f8;--soft-orange:#fff2e5;--soft-red:#f9ecec;
+    }
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+    a{color:inherit}.top{position:sticky;top:0;z-index:10;background:rgba(246,248,251,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .topin{max-width:1380px;margin:auto;padding:14px 18px;display:flex;align-items:center;gap:12px}
+    .back{border:1px solid var(--border);background:#fff;border-radius:12px;padding:10px 14px;text-decoration:none;font-weight:700;color:var(--navy)}
+    .brand{display:flex;align-items:center;gap:10px}.logo{width:42px;height:42px;border-radius:13px;background:var(--teal);display:grid;place-items:center;color:#fff;font-size:21px}
+    .title{font-weight:850}.subtitle{font-size:12px;color:var(--muted)}
+    .spacer{flex:1}.badge{padding:7px 10px;border-radius:999px;background:var(--soft-teal);color:var(--teal);font-size:12px;font-weight:800}
+    main{max-width:1380px;margin:auto;padding:22px 18px 60px}
+    .hero{display:flex;gap:18px;align-items:flex-end;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap}
+    h1{margin:0;font-size:clamp(25px,4vw,38px);letter-spacing:-1px}.hero p{margin:7px 0 0;color:var(--muted)}
+    .sync{font-size:12px;color:var(--muted)}
+    .cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:16px;box-shadow:0 6px 22px rgba(7,50,81,.04)}
+    .metric-label{color:var(--muted);font-size:12px;font-weight:650}.metric{font-size:25px;font-weight:850;margin-top:6px}.metric.small{font-size:19px}
+    .tabs{display:flex;gap:8px;overflow:auto;padding:2px 0 12px;position:sticky;top:72px;z-index:8;background:linear-gradient(var(--bg) 80%,rgba(246,248,251,0))}
+    .tab{white-space:nowrap;border:1px solid var(--border);background:#fff;border-radius:999px;padding:9px 13px;font-weight:750;color:var(--navy);cursor:pointer}
+    .tab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    .section{display:none}.section.active{display:block}
+    .section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 0}.section-head h2{margin:0;font-size:21px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap}.control{border:1px solid var(--border);background:#fff;border-radius:12px;padding:9px 10px;min-width:150px}
+    table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden}
+    th,td{padding:11px 12px;text-align:left;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}
+    th{background:#f9fafb;color:#475467;font-size:11px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:118px}
+    tr:last-child td{border-bottom:0}.money{text-align:right;font-weight:800;white-space:nowrap}.muted{color:var(--muted)}
+    .status{display:inline-block;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:850;white-space:nowrap}
+    .st-paid{background:var(--soft-teal);color:var(--teal)}.st-due{background:var(--soft-orange);color:#a85600}.st-risk{background:var(--soft-red);color:var(--red)}.st-neutral{background:var(--soft-blue);color:var(--blue)}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.item h3{margin:0 0 5px;font-size:16px}.item p{margin:4px 0;color:var(--muted);font-size:13px}
+    .projection{display:grid;grid-template-columns:120px repeat(4,minmax(110px,1fr));gap:0;background:#fff;border:1px solid var(--border);border-radius:18px;overflow:auto}
+    .projection>div{padding:11px 12px;border-bottom:1px solid var(--border);min-width:110px}.projection .head{font-weight:800;background:#f9fafb;color:#475467;font-size:11px;text-transform:uppercase}
+    .negative{color:var(--red);font-weight:850}.positive{color:var(--teal);font-weight:850}
+    .empty,.error{background:#fff;border:1px solid var(--border);border-radius:18px;padding:24px;text-align:center;color:var(--muted)}
+    .error{border-color:#f4b9b9;color:var(--red)}.loading{display:grid;place-items:center;min-height:45vh;color:var(--muted)}
+    .spinner{width:34px;height:34px;border:3px solid #d7eeeb;border-top-color:var(--teal);border-radius:50%;animation:s .8s linear infinite;margin:auto auto 12px}@keyframes s{to{transform:rotate(360deg)}}
+    .source-note{margin-top:14px;font-size:12px;color:var(--muted)}
+    @media(max-width:900px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr 1fr}.projection{grid-template-columns:105px repeat(4,120px)}}
+    @media(max-width:600px){.topin{padding:11px}.subtitle{display:none}.badge{display:none}main{padding:16px 11px 50px}.cards{grid-template-columns:1fr 1fr;gap:8px}.card{padding:13px}.metric{font-size:20px}.grid{grid-template-columns:1fr}.table-wrap{overflow:auto;border-radius:16px}table{min-width:820px}.tabs{top:64px}.back{padding:9px 11px}.section-head{align-items:flex-start;flex-direction:column}.controls{width:100%}.control{flex:1;min-width:130px}}
+  </style>
+</head>
+<body>
+<header class="top">
+  <div class="topin">
+    <a class="back" href="/apps/family-finance/">← App</a>
+    <div class="brand"><div class="logo">▣</div><div><div class="title">JKDD Family Finance</div><div class="subtitle">Planejamento Familiar — dados reais protegidos</div></div></div>
+    <div class="spacer"></div><div class="badge" id="memberBadge">Carregando acesso…</div>
+  </div>
+</header>
+<main>
+  <div id="loading" class="loading"><div><div class="spinner"></div>Carregando planejamento da família…</div></div>
+  <div id="error" class="error" hidden></div>
+  <div id="app" hidden>
+    <div class="hero">
+      <div><h1>Planejamento Familiar</h1><p id="spaceName">Família</p></div>
+      <div class="sync">Fonte: HANDOFF_PLANEJAMENTO_FAMILIAR_SET2026_DEZ2027 · <span id="updatedAt"></span></div>
+    </div>
+
+    <div class="cards">
+      <div class="card"><div class="metric-label">Registros financeiros</div><div class="metric" id="recordsCount">—</div><div class="muted" id="recordsDetail"></div></div>
+      <div class="card"><div class="metric-label">Pagos — saídas</div><div class="metric" id="paidTotal">—</div><div class="muted" id="paidCount"></div></div>
+      <div class="card"><div class="metric-label">A pagar / agendado</div><div class="metric" id="dueTotal">—</div><div class="muted" id="dueCount"></div></div>
+      <div class="card"><div class="metric-label">Projeção do próximo mês</div><div class="metric small" id="projectionBalance">—</div><div class="muted" id="projectionMonth"></div></div>
+    </div>
+
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-tab="expenses">Despesas e movimentos</button>
+      <button class="tab" data-tab="projections">Projeções</button>
+      <button class="tab" data-tab="goals">Metas</button>
+      <button class="tab" data-tab="accounts">Contas e cartões</button>
+      <button class="tab" data-tab="assumptions">Premissas</button>
+      <button class="tab" data-tab="rules">Regras</button>
+    </div>
+
+    <section class="section active" id="expenses">
+      <div class="section-head"><h2>Despesas, pagamentos e movimentos</h2><div class="controls">
+        <input class="control" id="search" placeholder="Buscar descrição/categoria">
+        <select class="control" id="statusFilter"><option value="">Todos os status</option></select>
+      </div></div>
+      <div class="table-wrap"><table><thead><tr><th>ID</th><th>Data</th><th>Descrição</th><th>Categoria</th><th>Status</th><th>Origem</th><th class="money">Valor</th></tr></thead><tbody id="recordsBody"></tbody></table></div>
+      <div class="source-note">Transferências internas, pagamentos de cartão e reembolsos preservam sua classificação original e não são tratados automaticamente como nova despesa.</div>
+    </section>
+
+    <section class="section" id="projections">
+      <div class="section-head"><h2>Projeções mensais — Set/2026 a Dez/2027</h2></div>
+      <div class="projection" id="projectionGrid"></div>
+    </section>
+
+    <section class="section" id="goals"><div class="section-head"><h2>Metas e reservas</h2></div><div class="grid" id="goalsGrid"></div></section>
+    <section class="section" id="accounts"><div class="section-head"><h2>Contas e cartões</h2></div><div class="grid" id="accountsGrid"></div></section>
+    <section class="section" id="assumptions"><div class="section-head"><h2>Premissas do planejamento</h2></div><div class="grid" id="assumptionsGrid"></div></section>
+    <section class="section" id="rules"><div class="section-head"><h2>Regras financeiras ativas</h2></div><div class="grid" id="rulesGrid"></div></section>
+  </div>
+</main>
+<script>
+(() => {
+  const SUPABASE_URL='https://mnnjtcsflkqicvvvuevu.supabase.co';
+  const API_KEY='sb_publishable_yIgTDTlzP1wwKsMi8e_fvQ_30PRkXEw';
+  const dueStatuses=new Set(['A PAGAR','AGENDADO','PENDENTE','PAGO/PROCESSANDO']);
+  let records=[];
+
+  const money=(minor,currency='USD') => new Intl.NumberFormat('en-US',{style:'currency',currency}).format((Number(minor||0))/100);
+  const amount=(value,unit='') => {
+    const n=Number(value||0);
+    return (unit.startsWith('US$') ? new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(n) : n.toLocaleString('pt-BR')) + (unit ? ' '+unit.replace(/^US\$\//,'/') : '');
+  };
+  const date=v => v ? new Date(v+'T12:00:00').toLocaleDateString('pt-BR') : '—';
+  const month=v => v ? new Date(v+'T12:00:00').toLocaleDateString('pt-BR',{month:'short',year:'numeric'}) : '—';
+  const esc=s => String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+  const statusClass=s => s==='PAGO'?'st-paid':dueStatuses.has(s)?'st-due':(s==='A CONFIRMAR'||s==='PROVISÓRIO')?'st-risk':'st-neutral';
+
+  function tokenFromStorage(){
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i)||'';
+      if(!key.includes('auth-token') && !key.includes('supabase')) continue;
+      try{
+        const raw=JSON.parse(localStorage.getItem(key));
+        const candidate=raw?.access_token || raw?.currentSession?.access_token || raw?.session?.access_token || raw?.value?.access_token;
+        if(candidate) return candidate;
+      }catch(_){}
+    }
+    const exact=localStorage.getItem('sb-mnnjtcsflkqicvvvuevu-auth-token');
+    if(exact){try{return JSON.parse(exact)?.access_token||null}catch(_){}}
+    return null;
+  }
+
+  async function api(path,{method='GET',body}={}){
+    const token=tokenFromStorage();
+    if(!token) throw new Error('NO_SESSION');
+    const res=await fetch(SUPABASE_URL+path,{
+      method,
+      headers:{'apikey':API_KEY,'Authorization':'Bearer '+token,'Content-Type':'application/json'},
+      body:body?JSON.stringify(body):undefined,
+      cache:'no-store'
+    });
+    if(res.status===401) throw new Error('SESSION_EXPIRED');
+    if(!res.ok) throw new Error('API_'+res.status+': '+await res.text());
+    return res.status===204?null:res.json();
+  }
+
+  const query=(table,space,select,order='') => api('/rest/v1/'+table+'?select='+encodeURIComponent(select)+'&finance_space_id=eq.'+encodeURIComponent(space)+(order?'&order='+encodeURIComponent(order):''));
+
+  async function load(){
+    try{
+      const access=await api('/rest/v1/rpc/jff_current_access',{method:'POST',body:{}});
+      if(!access?.length) throw new Error('NO_ACCESS');
+      const a=access[0], space=a.finance_space_id;
+      document.getElementById('spaceName').textContent=a.space_name+' · planejamento importado';
+      document.getElementById('memberBadge').textContent=(a.display_name||'Membro')+' · '+a.role_label;
+
+      const [r,p,g,acc,ass,rules]=await Promise.all([
+        query('jff_financial_records',space,'source_record_id,description,source_category,amount_minor,currency,economic_direction,status_label,due_on,occurred_on,period_month,confirmed_label,source_namespace,counting_eligibility','source_record_id.asc'),
+        query('jff_projection_months',space,'month_start,income_adjusted_minor,expenses_minor,withdrawals_goals_minor,projected_month_balance_minor,notes,source_namespace','month_start.asc'),
+        query('jff_goals',space,'source_record_id,goal_name,target_amount_minor,currency,deadline_label,initial_contribution_minor,priority,status_label,rule_text','source_record_id.asc'),
+        query('jff_financial_accounts',space,'account_id,account_type,display_name,last4,currency,account_status,current_balance_minor,credit_limit_minor,balance_as_of,source_record_id,source_label','source_record_id.asc'),
+        query('jff_planning_assumptions',space,'source_record_id,assumption_name,amount,unit,notes,source_namespace','source_record_id.asc'),
+        query('jff_finance_rules',space,'source_record_id,theme,rule_text,application_scope,status_label,notes','source_record_id.asc')
+      ]);
+      records=r||[];
+      renderSummary(records,p||[]);
+      renderRecords(records);
+      renderProjections(p||[]);
+      renderGoals(g||[]);
+      renderAccounts(acc||[]);
+      renderAssumptions(ass||[]);
+      renderRules(rules||[]);
+      document.getElementById('updatedAt').textContent='carregado '+new Date().toLocaleString('pt-BR');
+      document.getElementById('loading').hidden=true;document.getElementById('app').hidden=false;
+    }catch(e){
+      document.getElementById('loading').hidden=true;
+      const box=document.getElementById('error');box.hidden=false;
+      if(e.message==='NO_SESSION'||e.message==='SESSION_EXPIRED') box.innerHTML='<strong>Sessão não encontrada.</strong><br>Volte ao aplicativo, faça login e abra o Planejamento novamente.<br><br><a class="back" href="/apps/family-finance/">Voltar para entrar</a>';
+      else if(e.message==='NO_ACCESS') box.textContent='Sua conta não possui acesso ativo ao Family Finance.';
+      else box.textContent='Não foi possível carregar o planejamento agora. '+e.message;
+    }
+  }
+
+  function renderSummary(rows,projections){
+    const paid=rows.filter(x=>x.economic_direction==='OUTFLOW'&&x.status_label==='PAGO');
+    const due=rows.filter(x=>x.economic_direction==='OUTFLOW'&&dueStatuses.has(x.status_label)&&x.status_label!=='PAGO/PROCESSANDO');
+    document.getElementById('recordsCount').textContent=rows.length;
+    document.getElementById('recordsDetail').textContent=new Set(rows.map(x=>x.source_namespace)).size+' fontes preservadas';
+    document.getElementById('paidTotal').textContent=money(paid.reduce((s,x)=>s+Number(x.amount_minor||0),0));
+    document.getElementById('paidCount').textContent=paid.length+' registros pagos';
+    document.getElementById('dueTotal').textContent=money(due.reduce((s,x)=>s+Number(x.amount_minor||0),0));
+    document.getElementById('dueCount').textContent=due.length+' compromissos';
+    const now=new Date(), current=projections.find(x=>new Date(x.month_start+'T12:00:00')>=new Date(now.getFullYear(),now.getMonth(),1))||projections[0];
+    if(current){
+      const bal=Number(current.projected_month_balance_minor||0);
+      const el=document.getElementById('projectionBalance');el.textContent=money(bal);el.className='metric small '+(bal<0?'negative':'positive');
+      document.getElementById('projectionMonth').textContent=month(current.month_start);
+    }
+  }
+
+  function fillStatusOptions(rows){
+    const el=document.getElementById('statusFilter');
+    [...new Set(rows.map(x=>x.status_label).filter(Boolean))].sort().forEach(s=>{const o=document.createElement('option');o.value=s;o.textContent=s;el.appendChild(o)});
+  }
+
+  function renderRecords(rows){
+    fillStatusOptions(rows); applyRecordFilters();
+  }
+  function applyRecordFilters(){
+    const q=(document.getElementById('search').value||'').trim().toLowerCase();
+    const st=document.getElementById('statusFilter').value;
+    const filtered=records.filter(x=>{
+      const hay=[x.description,x.source_category,x.source_namespace,x.source_record_id].join(' ').toLowerCase();
+      return (!q||hay.includes(q))&&(!st||x.status_label===st);
+    }).sort((a,b)=>{
+      const ad=a.due_on||a.occurred_on||a.period_month||'9999-99-99';
+      const bd=b.due_on||b.occurred_on||b.period_month||'9999-99-99';
+      return ad.localeCompare(bd)||Number(a.source_record_id)-Number(b.source_record_id);
+    });
+    const body=document.getElementById('recordsBody');
+    body.innerHTML=filtered.map(x=>`<tr>
+      <td><strong>${esc(x.source_record_id)}</strong></td>
+      <td>${date(x.due_on||x.occurred_on||x.period_month)}</td>
+      <td><strong>${esc(x.description)}</strong><div class="muted">${esc(x.confirmed_label||'')}</div></td>
+      <td>${esc(x.source_category||'—')}</td>
+      <td><span class="status ${statusClass(x.status_label)}">${esc(x.status_label||'SEM STATUS')}</span></td>
+      <td><span class="muted">${esc(x.source_namespace||'—')}</span></td>
+      <td class="money">${money(x.amount_minor,x.currency)}</td>
+    </tr>`).join('')||'<tr><td colspan="7" class="muted">Nenhum registro encontrado.</td></tr>';
+  }
+
+  function renderProjections(rows){
+    const g=document.getElementById('projectionGrid');
+    g.innerHTML=['Mês','Renda ajustada','Despesas','Metas/reservas','Saldo projetado'].map(x=>'<div class="head">'+x+'</div>').join('');
+    rows.forEach(x=>{
+      const bal=Number(x.projected_month_balance_minor||0);
+      g.insertAdjacentHTML('beforeend',`
+        <div><strong>${month(x.month_start)}</strong><br><span class="muted">${esc(x.notes||'')}</span></div>
+        <div>${money(x.income_adjusted_minor)}</div>
+        <div>${money(x.expenses_minor)}</div>
+        <div>${money(x.withdrawals_goals_minor)}</div>
+        <div class="${bal<0?'negative':'positive'}">${money(bal)}</div>`);
+    });
+  }
+  function renderGoals(rows){document.getElementById('goalsGrid').innerHTML=rows.map(x=>`<div class="card item"><h3>#${esc(x.source_record_id)} · ${esc(x.goal_name)}</h3><div class="metric small">${money(x.target_amount_minor,x.currency)}</div><p>${esc(x.deadline_label||'Sem prazo')} · ${esc(x.priority||'')}</p><p><span class="status st-neutral">${esc(x.status_label||'')}</span></p><p>${esc(x.rule_text||'')}</p></div>`).join('')}
+  function renderAccounts(rows){document.getElementById('accountsGrid').innerHTML=rows.map(x=>`<div class="card item"><h3>${esc(x.display_name)}</h3><div class="metric small">${money(x.current_balance_minor,x.currency)}</div><p>${esc(x.account_type)} · ${esc(x.account_status)} · em ${date(x.balance_as_of)}</p><p class="muted">Fonte: ${esc(x.source_label||'—')} · ID ${esc(x.source_record_id)}</p></div>`).join('')}
+  function renderAssumptions(rows){document.getElementById('assumptionsGrid').innerHTML=rows.map(x=>`<div class="card item"><h3>#${esc(x.source_record_id)} · ${esc(x.assumption_name)}</h3><div class="metric small">${esc(amount(x.amount,x.unit))}</div><p>${esc(x.notes||'')}</p></div>`).join('')}
+  function renderRules(rows){document.getElementById('rulesGrid').innerHTML=rows.map(x=>`<div class="card item"><h3>#${esc(x.source_record_id)} · ${esc(x.theme)}</h3><p><strong>${esc(x.rule_text)}</strong></p><p>${esc(x.application_scope||'')}</p><p>${esc(x.notes||'')}</p></div>`).join('')}
+
+  document.getElementById('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(!b)return;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));document.querySelectorAll('.section').forEach(x=>x.classList.toggle('active',x.id===b.dataset.tab));});
+  document.getElementById('search').addEventListener('input',applyRecordFilters);
+  document.getElementById('statusFilter').addEventListener('change',applyRecordFilters);
+  load();
+})();
+</script>
+</body>
+</html>
