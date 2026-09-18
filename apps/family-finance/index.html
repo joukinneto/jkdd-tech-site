@@ -46,10 +46,18 @@
         if (!response.ok) throw new Error('APP_SOURCE_UNAVAILABLE');
 
         let source = await response.text();
+        const hadTwelveCharacterRule = source.includes('b.length>=12');
         source = source
           .replace('b.length>=12', 'b.length>=9')
           .replaceAll('12 caracteres', '9 caracteres')
           .replaceAll('pelo menos 12', 'pelo menos 9');
+
+        window.__JFF_CONTINUO_PATCH = Object.freeze({
+          passwordMinLength: 9,
+          patchedSource: hadTwelveCharacterRule &&
+            source.includes('b.length>=9') &&
+            !source.includes('pelo menos 12 caracteres')
+        });
 
         const entrypointUrl = URL.createObjectURL(
           new Blob([source], { type: 'application/javascript' })
