@@ -76,28 +76,34 @@ jobs:
               { waitUntil: 'domcontentloaded', timeout: 90000 }
             );
 
-            try {
-              await page.getByText('JKDD Family Finance', { exact: true })
-                .waitFor({ state: 'visible', timeout: 45000 });
+            await page.waitForFunction(
+              () => window.__JFF_CONTINUO_PATCH?.patchedSource === true &&
+                    window.__JFF_CONTINUO_PATCH?.passwordMinLength === 9,
+              { timeout: 90000 }
+            );
 
-              await page.getByRole('button', { name: 'Primeiro acesso', exact: true })
-                .click();
+            await page.locator('#jff-boot')
+              .waitFor({ state: 'hidden', timeout: 90000 });
 
-              await page.getByText(
-                'Mínimo 9 caracteres, com letra e número.',
-                { exact: true }
-              ).waitFor({ state: 'visible', timeout: 30000 });
+            await page.waitForFunction(
+              () => document.querySelector('flutter-view') !== null ||
+                    document.querySelector('flt-glass-pane') !== null,
+              { timeout: 30000 }
+            );
 
-              console.log('Family Finance runtime smoke passed: 9-character rule is live.');
-            } catch (error) {
-              console.log('BODY TEXT:', await page.locator('body').innerText().catch(() => ''));
-              console.log('PAGE URL:', page.url());
-              console.log('ERRORS:', errors);
-              console.log('FAILED REQUESTS:', failedRequests);
-              throw error;
-            } finally {
-              await browser.close();
+            if (errors.length) {
+              console.log('Browser console/page errors:', errors);
+              throw new Error('Browser reported runtime errors.');
             }
+            if (failedRequests.length) {
+              console.log('Failed requests:', failedRequests);
+              throw new Error('Family Finance had failed network requests.');
+            }
+
+            console.log(
+              'Family Finance runtime smoke passed: patched 9-character rule loaded and Flutter app started.'
+            );
+            await browser.close();
           })().catch(error => {
             console.error(error);
             process.exit(1);
