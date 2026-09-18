@@ -35,6 +35,15 @@ jobs:
           echo "Timed out waiting for published bootstrap."
           exit 1
 
+      - name: Inspect Family Finance source headers
+        shell: bash
+        run: |
+          set -e
+          echo "=== flutter.js ==="
+          curl -sSIL --max-time 20 https://joukinneto.github.io/jkdd-family-finance/flutter.js
+          echo "=== main.dart.js ==="
+          curl -sSIL --max-time 20 https://joukinneto.github.io/jkdd-family-finance/main.dart.js
+
       - name: Install browser test dependencies
         run: |
           npm ci
@@ -50,10 +59,16 @@ jobs:
             const browser = await chromium.launch({ headless: true });
             const page = await browser.newPage();
             const errors = [];
+            const failedRequests = [];
 
-            page.on('pageerror', error => errors.push(String(error)));
+            page.on('pageerror', error => errors.push('pageerror: ' + String(error)));
             page.on('console', message => {
-              if (message.type() === 'error') errors.push(message.text());
+              if (message.type() === 'error') errors.push('console: ' + message.text());
+            });
+            page.on('requestfailed', request => {
+              failedRequests.push(
+                request.url() + ' :: ' + (request.failure()?.errorText || 'unknown')
+              );
             });
 
             await page.goto(
@@ -61,23 +76,28 @@ jobs:
               { waitUntil: 'domcontentloaded', timeout: 90000 }
             );
 
-            await page.getByText('JKDD Family Finance', { exact: true })
-              .waitFor({ state: 'visible', timeout: 90000 });
+            try {
+              await page.getByText('JKDD Family Finance', { exact: true })
+                .waitFor({ state: 'visible', timeout: 45000 });
 
-            await page.getByRole('button', { name: 'Primeiro acesso', exact: true })
-              .click();
+              await page.getByRole('button', { name: 'Primeiro acesso', exact: true })
+                .click();
 
-            await page.getByText(
-              'Mínimo 9 caracteres, com letra e número.',
-              { exact: true }
-            ).waitFor({ state: 'visible', timeout: 30000 });
+              await page.getByText(
+                'Mínimo 9 caracteres, com letra e número.',
+                { exact: true }
+              ).waitFor({ state: 'visible', timeout: 30000 });
 
-            if (errors.length) {
-              console.log('Browser console/page errors:', errors);
+              console.log('Family Finance runtime smoke passed: 9-character rule is live.');
+            } catch (error) {
+              console.log('BODY TEXT:', await page.locator('body').innerText().catch(() => ''));
+              console.log('PAGE URL:', page.url());
+              console.log('ERRORS:', errors);
+              console.log('FAILED REQUESTS:', failedRequests);
+              throw error;
+            } finally {
+              await browser.close();
             }
-
-            console.log('Family Finance runtime smoke passed: 9-character rule is live.');
-            await browser.close();
           })().catch(error => {
             console.error(error);
             process.exit(1);
