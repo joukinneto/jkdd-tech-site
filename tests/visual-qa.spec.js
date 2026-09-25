@@ -18,6 +18,22 @@ for (const route of routes) {
 
     await page.goto(route.path, { waitUntil: 'networkidle' });
 
+    // Images use loading="lazy": bring each one into view and wait for it to
+    // settle (load or error) so off-screen icons are actually fetched before
+    // they are checked. A genuinely broken image still ends with naturalWidth 0.
+    await page.evaluate(async () => {
+      for (const img of document.querySelectorAll('img')) {
+        img.scrollIntoView({ block: 'center' });
+        if (img.complete) continue;
+        await new Promise(resolve => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+          setTimeout(resolve, 5000);
+        });
+      }
+      window.scrollTo(0, 0);
+    });
+
     const iconState = await page.locator('.icon-frame > img').evaluateAll(images =>
       images.map(img => ({
         src: img.currentSrc || img.src,
