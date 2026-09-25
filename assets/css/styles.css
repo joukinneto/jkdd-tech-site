@@ -245,6 +245,8 @@ button{font:inherit}
 .contact h2{position:relative;font-size:clamp(4rem,7vw,8rem)}
 .contact h2 em{color:#87d7ee}
 .contact>a{position:relative;display:inline-flex;gap:18px;margin-top:45px;font-size:clamp(1.1rem,2vw,1.8rem);border-bottom:1px solid currentColor;padding-bottom:5px}
+.contact-alt{position:relative;margin:22px 0 0;color:#a9c3c9;font-size:1rem}
+.contact-alt a{color:#eff5f4;border-bottom:1px solid rgba(239,245,244,.4)}
 
 /* --------------------------------- Footer -------------------------------- */
 .footer,.site-footer{display:flex;justify-content:space-between;gap:24px;padding:24px max(24px,calc((100vw - var(--max))/2));background:#050c10;color:#7e929c;font-size:.59rem;text-transform:uppercase;letter-spacing:.11em}

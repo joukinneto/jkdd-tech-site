@@ -7,7 +7,8 @@ const routes = [
   { name: 'JKDD Connect', path: '/products/connect/', minIcons: 1 },
   { name: 'JKDD Leads', path: '/products/leads/', minIcons: 1 },
   { name: 'LIOSYNA AI', path: '/products/liosyna-ai/', minIcons: 1 },
-  { name: 'Websites', path: '/websites/', minIcons: 3 }
+  { name: 'Websites', path: '/websites/', minIcons: 3 },
+  { name: 'Contact', path: '/contact/', minIcons: 1 }
 ];
 
 for (const route of routes) {
@@ -16,6 +17,22 @@ for (const route of routes) {
     page.on('pageerror', error => pageErrors.push(error.message));
 
     await page.goto(route.path, { waitUntil: 'networkidle' });
+
+    // Images use loading="lazy": bring each one into view and wait for it to
+    // settle (load or error) so off-screen icons are actually fetched before
+    // they are checked. A genuinely broken image still ends with naturalWidth 0.
+    await page.evaluate(async () => {
+      for (const img of document.querySelectorAll('img')) {
+        img.scrollIntoView({ block: 'center' });
+        if (img.complete) continue;
+        await new Promise(resolve => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+          setTimeout(resolve, 5000);
+        });
+      }
+      window.scrollTo(0, 0);
+    });
 
     const iconState = await page.locator('.icon-frame > img').evaluateAll(images =>
       images.map(img => ({
