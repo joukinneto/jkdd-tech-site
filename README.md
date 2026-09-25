@@ -9,6 +9,11 @@ Official repository for the JKDD TECH institutional website and product portal.
 - Public institutional hub: JKDD TECH
 - Product websites remain product-owned
 - Lead Source of Truth: JKDD Leads
+  - **Owner-approved interim exception (2026-09-25):** the `/contact/` form posts to
+    `https://jkdd-contato.vercel.app/api/contato` (source: `joukinneto/jogos-daniel/jkdd-contato`),
+    which stores messages in the Neon project `jkdd-tech` (table `contact_messages`).
+    JKDD Leads has no server-side intake yet (browser-local state only). When it exposes an
+    intake API, point `ENDPOINT` in `contact/index.html` to it and migrate the stored messages.
 - CRM owns Pipeline and Opportunity
 - Shared identity/security capabilities must reuse JKDD TECH Foundation when applicable
 - Do not present PLANNED, SPECIFIED or SCAFFOLDED capabilities as PRODUCTION
