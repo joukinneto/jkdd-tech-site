@@ -7,7 +7,8 @@ const routes = [
   { name: 'JKDD Connect', path: '/products/connect/', minIcons: 1 },
   { name: 'JKDD Leads', path: '/products/leads/', minIcons: 1 },
   { name: 'LIOSYNA AI', path: '/products/liosyna-ai/', minIcons: 1 },
-  { name: 'Websites', path: '/websites/', minIcons: 3 }
+  { name: 'Websites', path: '/websites/', minIcons: 3 },
+  { name: 'Contact', path: '/contact/', minIcons: 1 }
 ];
 
 for (const route of routes) {
